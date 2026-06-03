@@ -15,12 +15,15 @@ const complaintSchema = new mongoose.Schema(
     priority: String,
 
     status: {
+  type: String,
+  enum: ["Pending", "On Hold", "Resolved"],
+  default: "Pending",
+},
 
-      type: String,
-
-      default: "Pending",
-
-    },
+holdReason: {
+  type: String,
+  default: "",
+},
 
   },
 

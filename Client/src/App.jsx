@@ -15,6 +15,8 @@ import MaintenanceDashboard from "./pages/MaintenanceDashboard";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
+import UserManagement from "./pages/UserManagement";
+
 function App() {
 
   return (
@@ -101,6 +103,15 @@ function App() {
         <Route
           path="/settings"
           element={<Settings />}
+        />
+
+        <Route
+          path="/users"
+          element={
+            <ProtectedRoute allowedRole="admin">
+              <UserManagement />
+            </ProtectedRoute>
+          }
         />
 
       </Routes>

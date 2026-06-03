@@ -18,6 +18,11 @@ function Dashboard() {
 
   const lastAlertTime = useRef(0);
 
+  const [settings, setSettings] = useState({
+  yellowTime: 20,
+  redTime: 30,
+});
+
   const [notifiedComplaints, setNotifiedComplaints] = useState(() => {
 
   const saved = localStorage.getItem(
@@ -44,6 +49,14 @@ const settingsResponse = await API.get("/settings");
 const viewHours =
 
   settingsResponse.data.viewHours || 24;
+
+  setSettings({
+  yellowTime:
+    settingsResponse.data.yellowTime || 20,
+
+  redTime:
+    settingsResponse.data.redTime || 30,
+});
 
 // FILTER COMPLAINTS
 
@@ -155,7 +168,7 @@ setNotifiedComplaints(newIds);
 
             item.status === "Pending" &&
 
-            minutes >= 30
+           minutes >= settings.redTime
 
           );
 
@@ -255,11 +268,11 @@ setNotifiedComplaints(newIds);
 
     const created = new Date(createdAt);
 
-    const endTime = status === "Resolved"
-
-      ? new Date(updatedAt)
-
-      : new Date();
+    const endTime =
+  status === "Resolved" ||
+  status === "On Hold"
+    ? new Date(updatedAt)
+    : new Date();
 
     const diff = Math.floor(
 
@@ -276,56 +289,6 @@ setNotifiedComplaints(newIds);
       time: `${minutes}m ${seconds}s`,
 
       minutes,
-
-    };
-
-  };
-
-  // AUTO PRIORITY FUNCTION
-
-  const getPriority = (minutes) => {
-
-    if (minutes >= 45) {
-
-      return {
-
-        text: "Emergency",
-
-        color: "bg-red-800",
-
-      };
-
-    }
-
-    if (minutes >= 30) {
-
-      return {
-
-        text: "High",
-
-        color: "bg-red-500",
-
-      };
-
-    }
-
-    if (minutes >= 20) {
-
-      return {
-
-        text: "Medium",
-
-        color: "bg-yellow-500",
-
-      };
-
-    }
-
-    return {
-
-      text: "Low",
-
-      color: "bg-green-500",
 
     };
 
@@ -515,12 +478,6 @@ setNotifiedComplaints(newIds);
 
                   <th className="text-left p-5 text-gray-500 font-medium">
 
-                    Priority
-
-                  </th>
-
-                  <th className="text-left p-5 text-gray-500 font-medium">
-
                     Timer
 
                   </th>
@@ -549,12 +506,6 @@ setNotifiedComplaints(newIds);
 
                   );
 
-                  const priority = getPriority(
-
-                    timer.minutes
-
-                  );
-
                   return (
 
                     <tr
@@ -563,21 +514,21 @@ setNotifiedComplaints(newIds);
 
                       className={`border-b transition-all duration-500
 
-                      ${timer.minutes >= 45
+${timer.minutes >= settings.redTime + 15
 
-                        ? "bg-red-100 animate-pulse"
+  ? "bg-red-100 animate-pulse"
 
-                        : timer.minutes >= 30
+  : timer.minutes >= settings.redTime
 
-                        ? "bg-red-50"
+  ? "bg-red-50"
 
-                        : timer.minutes >= 20
+  : timer.minutes >= settings.yellowTime
 
-                        ? "bg-yellow-50"
+  ? "bg-yellow-50"
 
-                        : "hover:bg-gray-50"
+  : "hover:bg-gray-50"
 
-                      }`}
+}`}
 
                     >
 
@@ -633,22 +584,6 @@ setNotifiedComplaints(newIds);
 
                       </td>
 
-                      {/* PRIORITY */}
-
-                      <td className="p-5">
-
-                        <span
-
-                          className={`px-4 py-2 rounded-xl text-sm font-bold text-white whitespace-nowrap ${priority.color}`}
-
-                        >
-
-                          {priority.text}
-
-                        </span>
-
-                      </td>
-
                       {/* TIMER */}
 
                       <td className="p-5">
@@ -657,20 +592,13 @@ setNotifiedComplaints(newIds);
 
                           className={`px-4 py-2 rounded-xl text-sm font-bold text-white whitespace-nowrap
 
-                          ${timer.minutes < 20
-
+                          ${timer.minutes < settings.yellowTime
                             ? "bg-green-500"
-
-                            : timer.minutes < 30
-
+                            : timer.minutes < settings.redTime
                             ? "bg-yellow-500"
-
-                            : timer.minutes < 45
-
+                            : timer.minutes < settings.redTime + 15
                             ? "bg-red-500"
-
                             : "bg-red-800 animate-pulse"
-
                           }`}
 
                         >
@@ -685,29 +613,47 @@ setNotifiedComplaints(newIds);
 
                       <td className="p-5">
 
-                        {
+                      {item.status === "Pending" && (
 
-                          item.status === "Pending" ? (
+                        <span className="px-4 py-2 rounded-xl text-sm font-semibold bg-red-100 text-red-600 whitespace-nowrap">
 
-                            <span className="px-4 py-2 rounded-xl text-sm font-semibold bg-red-100 text-red-600 whitespace-nowrap">
+                          Pending
 
-                              Pending
+                        </span>
 
-                            </span>
+                      )}
 
-                          ) : (
+                      {item.status === "Resolved" && (
 
-                            <span className="px-4 py-2 rounded-xl text-sm font-semibold bg-green-100 text-green-600 whitespace-nowrap">
+                        <span className="px-4 py-2 rounded-xl text-sm font-semibold bg-green-100 text-green-600 whitespace-nowrap">
 
-                              Resolved
+                          Resolved
 
-                            </span>
+                        </span>
 
-                          )
+                      )}
 
-                        }
+                      {item.status === "On Hold" && (
 
-                      </td>
+                        <div>
+
+                          <span className="px-4 py-2 rounded-xl text-sm font-semibold bg-yellow-100 text-yellow-700 whitespace-nowrap">
+
+                            On Hold
+
+                          </span>
+
+                          <p className="text-xs text-gray-500 mt-2">
+
+                            {item.holdReason}
+
+                          </p>
+
+                        </div>
+
+                      )}
+
+                    </td>
 
                     </tr>
 

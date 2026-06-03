@@ -30,38 +30,54 @@ const getComplaints = async (req, res) => {
 
 // MARK RESOLVED
 
-const updateComplaintStatus = async (req, res) => {
+const markResolved = async (req, res) => {
 
   try {
 
-    const complaint = await Complaint.findByIdAndUpdate(
-
-      req.params.id,
-
-      {
-
-        status: "Resolved",
-
-      },
-
-      {
-
-        new: true,
-
-      }
-
-    );
+    const complaint =
+      await Complaint.findByIdAndUpdate(
+        req.params.id,
+        {
+          status: "Resolved",
+        },
+        {
+          new: true,
+        }
+      );
 
     res.json(complaint);
 
   } catch (error) {
 
-    console.log(error);
+    res.status(500).json({
+      error: "Failed",
+    });
+
+  }
+
+};
+const putOnHold = async (req, res) => {
+
+  try {
+
+    const complaint =
+      await Complaint.findByIdAndUpdate(
+        req.params.id,
+        {
+          status: "On Hold",
+          holdReason: req.body.reason,
+        },
+        {
+          new: true,
+        }
+      );
+
+    res.json(complaint);
+
+  } catch (error) {
 
     res.status(500).json({
-
-      error: "Failed to update complaint",
-
+      error: "Failed",
     });
 
   }
@@ -72,6 +88,8 @@ module.exports = {
 
   getComplaints,
 
-  updateComplaintStatus,
+  markResolved,
+
+  putOnHold,
 
 };

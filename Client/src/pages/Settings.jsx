@@ -82,6 +82,10 @@ function Settings() {
 
       localStorage.setItem("theme", theme);
 
+      alert("Settings Saved Successfully");
+
+window.location.reload();
+
       localStorage.setItem(
   "soundEnabled",
   soundEnabled

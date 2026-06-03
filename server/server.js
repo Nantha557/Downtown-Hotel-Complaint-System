@@ -5,7 +5,7 @@ const cors = require("cors");
 
 const testRoutes = require("./routes/testRoutes");
 const connectDB = require("./config/db");
-const syncComplaints = require("./services/syncComplaints");
+//const syncComplaints = require("./services/syncComplaints");
 const complaintRoutes = require("./routes/complaintRoutes");
 const authRoutes = require("./routes/authRoutes");
 const settingsRoutes = require("./routes/settingsRoutes");
@@ -43,11 +43,11 @@ const PORT = process.env.PORT || 5000;
 
 // SYNC WHATSAPP COMPLAINTS
 
-setInterval(() => {
+// setInterval(() => {
 
-  syncComplaints();
+//   syncComplaints();
 
-}, 5000);
+// }, 5000);
 
 // AUTO DELETE RESOLVED COMPLAINTS
 

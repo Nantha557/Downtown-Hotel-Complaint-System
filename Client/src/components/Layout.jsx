@@ -24,6 +24,9 @@ function Layout({ children }) {
 
   const role = localStorage.getItem("role");
 
+  const theme =
+  localStorage.getItem("theme") || "light";
+
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
@@ -40,9 +43,26 @@ function Layout({ children }) {
 
   };
 
+  const dashboardRoute =
+  role === "admin"
+    ? "/dashboard"
+    : role === "it"
+    ? "/it-dashboard"
+    : role === "maintenance"
+    ? "/maintenance-dashboard"
+    : role === "housekeeping"
+    ? "/housekeeping-dashboard"
+    : "/";
+
   return (
 
-    <div className="min-h-screen bg-[#f4f7fb] flex">
+    <div
+  className={`min-h-screen flex ${
+    theme === "dark"
+      ? "bg-gray-900 text-white"
+      : "bg-[#f4f7fb]"
+  }`}
+>
 
       {/* MOBILE TOPBAR */}
 
@@ -78,7 +98,7 @@ function Layout({ children }) {
 
               <Link
 
-                to="/dashboard"
+                to={dashboardRoute}
 
                 className="flex items-center gap-3 bg-white/10 px-4 py-3 rounded-xl"
 
@@ -204,7 +224,7 @@ function Layout({ children }) {
 
           <Link
 
-            to="/dashboard"
+            to={dashboardRoute}
 
             className="flex items-center gap-4 bg-white/10 hover:bg-white/20 rounded-2xl px-5 py-4 transition"
 
@@ -274,6 +294,22 @@ function Layout({ children }) {
 
         </div>
 
+        {role === "admin" && (
+
+  <Link
+
+    to="/users"
+
+    className="flex items-center gap-4 hover:bg-white/10 rounded-2xl px-5 py-4 transition"
+
+  >
+
+    User Management
+
+  </Link>
+
+)}
+
         {/* LOGOUT */}
 
         <button
@@ -294,7 +330,13 @@ function Layout({ children }) {
 
       {/* PAGE CONTENT */}
 
-      <div className="flex-1 pt-20 md:pt-0 overflow-x-hidden">
+      <div
+  className={`flex-1 pt-20 md:pt-0 overflow-x-hidden ${
+    theme === "dark"
+      ? "bg-gray-900 text-white"
+      : ""
+  }`}
+>
 
         {children}
 

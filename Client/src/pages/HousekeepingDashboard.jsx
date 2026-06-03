@@ -14,6 +14,11 @@ function HousekeepingDashboard() {
 
   const [complaints, setComplaints] = useState([]);
 
+  const [settings, setSettings] = useState({
+  yellowTime: 20,
+  redTime: 30,
+});
+
   const [, setRefresh] = useState(0);
 
   const lastAlertTime = useRef(0);
@@ -31,6 +36,14 @@ function HousekeepingDashboard() {
 // GET SETTINGS
 
 const settingsResponse = await API.get("/settings");
+
+setSettings({
+  yellowTime:
+    settingsResponse.data.yellowTime || 20,
+
+  redTime:
+    settingsResponse.data.redTime || 30,
+});
 
 const viewHours =
 
@@ -130,8 +143,7 @@ setComplaints(recentComplaints);
 
             item.status === "Pending" &&
 
-            minutes >= 30
-
+            minutes >= settings.redTime
           );
 
         }
@@ -192,7 +204,7 @@ setComplaints(recentComplaints);
 
     try {
 
-      await API.put(`/complaints/${id}`);
+      await API.put(`/complaints/${id}/resolve`);
 
       fetchComplaints();
 
@@ -203,6 +215,33 @@ setComplaints(recentComplaints);
     }
 
   };
+
+  const markHold = async (id) => {
+
+  const reason = prompt(
+    "Why is this complaint being put on hold?"
+  );
+
+  if (!reason) return;
+
+  try {
+
+    await API.put(
+      `/complaints/${id}/hold`,
+      {
+        reason,
+      }
+    );
+
+    fetchComplaints();
+
+  } catch (error) {
+
+    console.log(error);
+
+  }
+
+};
 
   useEffect(() => {
 
@@ -248,11 +287,11 @@ setComplaints(recentComplaints);
 
     const created = new Date(createdAt);
 
-    const endTime = status === "Resolved"
-
-      ? new Date(updatedAt)
-
-      : new Date();
+    const endTime =
+  status === "Resolved" ||
+  status === "On Hold"
+    ? new Date(updatedAt)
+    : new Date();
 
     const diff = Math.floor(
 
@@ -269,56 +308,6 @@ setComplaints(recentComplaints);
       time: `${minutes}m ${seconds}s`,
 
       minutes,
-
-    };
-
-  };
-
-  // AUTO PRIORITY
-
-  const getPriority = (minutes) => {
-
-    if (minutes >= 45) {
-
-      return {
-
-        text: "Emergency",
-
-        color: "bg-red-800",
-
-      };
-
-    }
-
-    if (minutes >= 30) {
-
-      return {
-
-        text: "High",
-
-        color: "bg-red-500",
-
-      };
-
-    }
-
-    if (minutes >= 20) {
-
-      return {
-
-        text: "Medium",
-
-        color: "bg-yellow-500",
-
-      };
-
-    }
-
-    return {
-
-      text: "Low",
-
-      color: "bg-green-500",
 
     };
 
@@ -460,12 +449,6 @@ setComplaints(recentComplaints);
 
                   <th className="text-left p-5">
 
-                    Priority
-
-                  </th>
-
-                  <th className="text-left p-5">
-
                     Timer
 
                   </th>
@@ -493,13 +476,6 @@ setComplaints(recentComplaints);
                     item.updatedAt
 
                   );
-
-                  const priority = getPriority(
-
-                    timer.minutes
-
-                  );
-
                   return (
 
                     <tr
@@ -508,21 +484,14 @@ setComplaints(recentComplaints);
 
                       className={`border-b transition-all duration-500
 
-                      ${timer.minutes >= 45
-
-                        ? "bg-red-100 animate-pulse"
-
-                        : timer.minutes >= 30
-
-                        ? "bg-red-50"
-
-                        : timer.minutes >= 20
-
-                        ? "bg-yellow-50"
-
-                        : "hover:bg-gray-50"
-
-                      }`}
+${timer.minutes >= settings.redTime + 15
+  ? "bg-red-100 animate-pulse"
+  : timer.minutes >= settings.redTime
+  ? "bg-red-50"
+  : timer.minutes >= settings.yellowTime
+  ? "bg-yellow-50"
+  : "hover:bg-gray-50"
+}`}
 
                     >
 
@@ -541,22 +510,6 @@ setComplaints(recentComplaints);
                       <td className="p-5 text-gray-500 max-w-xs">
 
                         {item.description}
-
-                      </td>
-
-                      {/* PRIORITY */}
-
-                      <td className="p-5">
-
-                        <span
-
-                          className={`px-4 py-2 rounded-xl text-sm font-bold text-white ${priority.color}`}
-
-                        >
-
-                          {priority.text}
-
-                        </span>
 
                       </td>
 
@@ -596,35 +549,66 @@ setComplaints(recentComplaints);
 
                       <td className="p-5">
 
-                        {
+                      {item.status === "Pending" && (
 
-                          item.status === "Pending" ? (
+                        <div className="flex gap-2">
 
-                            <button
+                          <button
+                            onClick={() => markResolved(item._id)}
+                            className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl"
+                          >
+                            Resolve
+                          </button>
 
-                              onClick={() => markResolved(item._id)}
+                          <button
+                            onClick={() => markHold(item._id)}
+                            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl"
+                          >
+                            Hold
+                          </button>
 
-                              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl"
+                        </div>
 
-                            >
+                      )}
 
-                              Mark Done
+                      {item.status === "Resolved" && (
 
-                            </button>
+                        <span className="bg-green-100 text-green-600 px-4 py-2 rounded-xl text-sm font-semibold">
 
-                          ) : (
+                          Resolved
 
-                            <span className="bg-green-100 text-green-600 px-4 py-2 rounded-xl text-sm font-semibold">
+                        </span>
 
-                              Resolved
+                      )}
 
-                            </span>
+                      {item.status === "On Hold" && (
 
-                          )
+                        <div>
 
-                        }
+                          <span className="bg-blue-100 text-blue-700 px-4 py-2 rounded-xl text-sm font-semibold">
 
-                      </td>
+                            On Hold
+
+                          </span>
+
+                          <p className="text-xs text-gray-500 mt-2">
+
+                            {item.holdReason}
+
+                          </p>
+
+                          <button
+                            onClick={() => markResolved(item._id)}
+                            className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl mt-2"
+                          >
+                            Resolve
+                          </button>
+
+                        </div>
+
+                      )}
+
+                    </td>
 
                     </tr>
 
