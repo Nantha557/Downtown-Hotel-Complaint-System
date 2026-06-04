@@ -41,6 +41,11 @@ app.get("/", (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 
+
+app.get("/test-hold", (req, res) => {
+  res.send("hold route version");
+});
+
 // SYNC WHATSAPP COMPLAINTS
 
 // setInterval(() => {
