@@ -228,7 +228,7 @@ setComplaints(recentComplaints);
   try {
 
     await API.put(
-      `/complaints/${id}/hold`,
+      `/complaints/${id}/onhold`,
       {
         reason,
       }
