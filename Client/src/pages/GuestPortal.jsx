@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import {
 
   Wrench,
@@ -19,6 +20,8 @@ import {
 } from "lucide-react";
 
 function GuestPortal() {
+
+  const navigate = useNavigate();
 
   return (
 
@@ -74,17 +77,10 @@ function GuestPortal() {
 
             {/* IT */}
 
-            <a
-
-              href="https://docs.google.com/forms/d/e/1FAIpQLSf36b6PLg0Hs8k0nzpEj3PZxD0idMWW9p7U5i5kKOHOME7Fhw/viewform?usp=publish-editor"
-
-              target="_blank"
-
-              rel="noreferrer"
-
-              className="bg-white rounded-3xl p-10 shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-purple-100"
-
-            >
+            <div
+  onClick={() => navigate("/it")}
+  className="bg-white rounded-3xl p-10 shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-purple-100 cursor-pointer"
+>
 
               <div className="bg-purple-100 w-24 h-24 rounded-3xl flex items-center justify-center mb-8">
 
@@ -104,21 +100,14 @@ function GuestPortal() {
 
               </p>
 
-            </a>
+            </div>
 
             {/* HOUSEKEEPING */}
 
-            <a
-
-              href=" https://docs.google.com/forms/d/e/1FAIpQLSdD94W508apwD0dR4HNmTXDh-KGGBZ7c17bTmph1Qf7pzaygw/viewform?usp=publish-editor"
-
-              target="_blank"
-
-              rel="noreferrer"
-
-              className="bg-white rounded-3xl p-10 shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-blue-100"
-
-            >
+            <div
+  onClick={() => navigate("/housekeeping")}
+  className="bg-white rounded-3xl p-10 shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-blue-100 cursor-pointer"
+>
 
               <div className="bg-blue-100 w-24 h-24 rounded-3xl flex items-center justify-center mb-8">
 
@@ -138,21 +127,14 @@ function GuestPortal() {
 
               </p>
 
-            </a>
+            </div>
 
             {/* MAINTENANCE */}
 
-            <a
-
-              href=" https://docs.google.com/forms/d/e/1FAIpQLSfN2FTEcXQSb3t6tdQIgP8iBhOsd5k9R5ne1GUzLKqcMQTmrg/viewform?usp=publish-editor"
-
-              target="_blank"
-
-              rel="noreferrer"
-
-              className="bg-white rounded-3xl p-10 shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-yellow-100"
-
-            >
+           <div
+  onClick={() => navigate("/maintenance")}
+  className="bg-white rounded-3xl p-10 shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-yellow-100 cursor-pointer"
+>
 
               <div className="bg-yellow-100 w-24 h-24 rounded-3xl flex items-center justify-center mb-8">
 
@@ -172,7 +154,7 @@ function GuestPortal() {
 
               </p>
 
-            </a>
+            </div>
 
           </div>
 

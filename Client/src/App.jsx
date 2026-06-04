@@ -19,6 +19,10 @@ import UserManagement from "./pages/UserManagement";
 
 import MaintenanceGuest from "./pages/MaintenanceGuest";
 
+import ITGuest from "./pages/ITGuest";
+
+import HousekeepingGuest from "./pages/HousekeepingGuest";
+
 function App() {
 
   return (
@@ -119,6 +123,16 @@ function App() {
         <Route
   path="/maintenance"
   element={<MaintenanceGuest />}
+/>
+
+<Route
+  path="/it"
+  element={<ITGuest />}
+/>
+
+<Route
+  path="/housekeeping"
+  element={<HousekeepingGuest />}
 />
 
       </Routes>
