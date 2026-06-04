@@ -227,7 +227,7 @@ const markHold = async (id) => {
   try {
 
     await API.put(
-      `/complaints/${id}/hold`,
+      `/complaints/${id}/onhold`,
       {
         reason,
       }
