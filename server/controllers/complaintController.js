@@ -28,6 +28,75 @@ const getComplaints = async (req, res) => {
 
 };
 
+// CREATE NEW COMPLAINT
+
+const createComplaint = async (req, res) => {
+
+  try {
+
+    const {
+
+      roomNo,
+
+      category,
+
+      complaint,
+
+      description,
+
+    } = req.body;
+
+    const newComplaint =
+      await Complaint.create({
+
+        roomNo,
+
+        category,
+
+        complaint,
+
+        description,
+
+        status: "Pending",
+
+      });
+
+      
+
+    res.status(201).json(
+      newComplaint
+    );
+
+    
+
+  } catch (error) {
+
+    console.log(error);
+
+    res.status(500).json({
+
+      error: "Failed to create complaint",
+
+    });
+
+    const newComplaint =
+  await Complaint.create({
+    roomNo,
+    category,
+    complaint,
+    description,
+    status: "Pending",
+  });
+
+console.log(
+  "NEW COMPLAINT:",
+  newComplaint
+);
+
+  }
+
+};
+
 // MARK RESOLVED
 
 const markResolved = async (req, res) => {
@@ -36,13 +105,21 @@ const markResolved = async (req, res) => {
 
     const complaint =
       await Complaint.findByIdAndUpdate(
+
         req.params.id,
+
         {
+
           status: "Resolved",
+
         },
+
         {
+
           new: true,
+
         }
+
       );
 
     res.json(complaint);
@@ -50,26 +127,41 @@ const markResolved = async (req, res) => {
   } catch (error) {
 
     res.status(500).json({
+
       error: "Failed",
+
     });
 
   }
 
 };
+
+// PUT ON HOLD
+
 const putOnHold = async (req, res) => {
 
   try {
 
     const complaint =
       await Complaint.findByIdAndUpdate(
+
         req.params.id,
+
         {
+
           status: "On Hold",
-          holdReason: req.body.reason,
+
+          holdReason:
+            req.body.reason,
+
         },
+
         {
+
           new: true,
+
         }
+
       );
 
     res.json(complaint);
@@ -77,7 +169,9 @@ const putOnHold = async (req, res) => {
   } catch (error) {
 
     res.status(500).json({
+
       error: "Failed",
+
     });
 
   }
@@ -87,6 +181,8 @@ const putOnHold = async (req, res) => {
 module.exports = {
 
   getComplaints,
+
+  createComplaint,
 
   markResolved,
 

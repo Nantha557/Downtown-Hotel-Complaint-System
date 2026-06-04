@@ -17,6 +17,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 import UserManagement from "./pages/UserManagement";
 
+import MaintenanceGuest from "./pages/MaintenanceGuest";
+
 function App() {
 
   return (
@@ -113,6 +115,11 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+  path="/maintenance"
+  element={<MaintenanceGuest />}
+/>
 
       </Routes>
 
