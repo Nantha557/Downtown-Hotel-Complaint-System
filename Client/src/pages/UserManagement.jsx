@@ -219,6 +219,10 @@ const deleteUser = async (
                   Housekeeping
                 </option>
 
+                <option value="Supervisor">
+                  Supervisor
+                </option>
+
                 <option value="admin">
                   Admin
                 </option>
@@ -302,6 +306,10 @@ const deleteUser = async (
 
                 Housekeeping
 
+              </option>
+
+              <option value="Supervisor">
+                Supervisor
               </option>
 
               <option value="admin">

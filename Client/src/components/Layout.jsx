@@ -46,12 +46,12 @@ function Layout({ children }) {
   const dashboardRoute =
   role === "admin"
     ? "/dashboard"
-    : role === "it"
-    ? "/it-dashboard"
     : role === "maintenance"
     ? "/maintenance-dashboard"
     : role === "housekeeping"
     ? "/housekeeping-dashboard"
+    : role === "supervisor"
+    ? "/supervisor-dashboard"
     : "/";
 
   return (

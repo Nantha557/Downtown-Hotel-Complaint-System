@@ -97,6 +97,11 @@ function Login() {
         navigate("/maintenance-dashboard");
 
       }
+      else if (role === "supervisor") {
+
+        navigate("/supervisor-dashboard");
+
+      }
 
       else {
 

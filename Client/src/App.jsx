@@ -21,6 +21,8 @@ import MaintenanceGuest from "./pages/MaintenanceGuest";
 
 import HousekeepingGuest from "./pages/HousekeepingGuest";
 
+import SupervisorDashboard from "./pages/SupervisorDashboard";
+
 function App() {
 
   return (
@@ -77,6 +79,17 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+  path="/supervisor-dashboard"
+  element={
+    <ProtectedRoute allowedRole="Supervisor">
+
+      <SupervisorDashboard />
+
+    </ProtectedRoute>
+  }
+/>
 
         <Route
           path="/dashboard"

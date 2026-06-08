@@ -57,16 +57,15 @@ const register = async (req, res) => {
 
   } catch (error) {
 
-    console.log(error);
+  console.log("REGISTER ERROR:");
+  console.log(error);
 
-    res.status(500).json({
+  res.status(500).json({
+    error: error.message,
+    stack: error.stack,
+  });
 
-      message:
-        "Registration failed",
-
-    });
-
-  }
+}
 
 };
 
