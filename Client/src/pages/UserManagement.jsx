@@ -6,7 +6,7 @@ function UserManagement() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("IT");
+const [role, setRole] = useState("Maintenance");
   const [loading, setLoading] = useState(false);
 
   const handleCreateUser = async (e) => {
@@ -27,7 +27,7 @@ function UserManagement() {
 
       setUsername("");
       setPassword("");
-      setRole("IT");
+      setRole("Maintenance");
 
     } catch (error) {
 
