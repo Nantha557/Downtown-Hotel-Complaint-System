@@ -53,7 +53,8 @@ const viewHours =
 
 const filtered = response.data.filter(
 
-  item => item.category === "Maintenance"
+  item => item.category === "Maintenance"||
+    item.category === "IT"
 
 );
 

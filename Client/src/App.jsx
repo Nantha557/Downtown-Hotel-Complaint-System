@@ -19,8 +19,6 @@ import UserManagement from "./pages/UserManagement";
 
 import MaintenanceGuest from "./pages/MaintenanceGuest";
 
-import ITGuest from "./pages/ITGuest";
-
 import HousekeepingGuest from "./pages/HousekeepingGuest";
 
 function App() {
@@ -125,10 +123,7 @@ function App() {
   element={<MaintenanceGuest />}
 />
 
-<Route
-  path="/it"
-  element={<ITGuest />}
-/>
+
 
 <Route
   path="/housekeeping"

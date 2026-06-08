@@ -76,38 +76,58 @@ function Complaints() {
 
   // FILTERS
 
+  const totalComplaints = complaints.length;
+
+const resolvedComplaints =
+  complaints.filter(
+    item => item.status === "Resolved"
+  ).length;
+
+const pendingComplaints =
+  complaints.filter(
+    item => item.status === "Pending"
+  ).length;
+
+const onHoldComplaints =
+  complaints.filter(
+    item => item.status === "On Hold"
+  ).length;
+
   const filteredComplaints = complaints.filter((item) => {
 
-    const matchesSearch =
+  const matchesSearch =
 
-      item.roomNo?.toLowerCase().includes(search.toLowerCase()) ||
+    item.roomNo
+      .toString()
+      .includes(search) ||
 
-      item.complaint?.toLowerCase().includes(search.toLowerCase());
+    item.complaint
+      .toLowerCase()
+      .includes(search.toLowerCase());
 
-    const matchesDepartment =
+  const matchesDepartment =
 
-      department === "All" ||
+    department === "All" ||
 
-      item.category === department;
+    item.category === department;
 
-    const matchesStatus =
+  const matchesStatus =
 
-      status === "All" ||
+    status === "All" ||
 
-      item.status === status;
+    item.status === status;
 
-    return (
+  return (
 
-      matchesSearch &&
+    matchesSearch &&
 
-      matchesDepartment &&
+    matchesDepartment &&
 
-      matchesStatus
+    matchesStatus
 
-    );
+  );
 
-  });
-
+});
   return (
 
     <Layout>
@@ -134,74 +154,45 @@ function Complaints() {
 
         {/* STATS */}
 
-        <div className="grid grid-cols-3 gap-3 md:gap-5 mb-8">
+       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
 
-          <div className="bg-white rounded-2xl p-4 shadow-sm">
+  <div className="bg-white rounded-2xl p-5 shadow-sm">
+    <p className="text-gray-500 text-sm">
+      Total Complaints
+    </p>
+    <h2 className="text-3xl font-bold text-blue-600 mt-2">
+      {totalComplaints}
+    </h2>
+  </div>
 
-            <p className="text-gray-500 text-xs md:text-sm">
+  <div className="bg-white rounded-2xl p-5 shadow-sm">
+    <p className="text-gray-500 text-sm">
+      Resolved
+    </p>
+    <h2 className="text-3xl font-bold text-green-500 mt-2">
+      {resolvedComplaints}
+    </h2>
+  </div>
 
-              Total
+  <div className="bg-white rounded-2xl p-5 shadow-sm">
+    <p className="text-gray-500 text-sm">
+      Pending
+    </p>
+    <h2 className="text-3xl font-bold text-red-500 mt-2">
+      {pendingComplaints}
+    </h2>
+  </div>
 
-            </p>
+  <div className="bg-white rounded-2xl p-5 shadow-sm">
+    <p className="text-gray-500 text-sm">
+      On Hold
+    </p>
+    <h2 className="text-3xl font-bold text-yellow-500 mt-2">
+      {onHoldComplaints}
+    </h2>
+  </div>
 
-            <h2 className="text-3xl md:text-4xl font-bold text-blue-600 mt-2">
-
-              {complaints.length}
-
-            </h2>
-
-          </div>
-
-          <div className="bg-white rounded-2xl p-4 shadow-sm">
-
-            <p className="text-gray-500 text-xs md:text-sm">
-
-              Pending
-
-            </p>
-
-            <h2 className="text-3xl md:text-4xl font-bold text-red-500 mt-2">
-
-              {
-
-                complaints.filter(
-
-                  item => item.status === "Pending"
-
-                ).length
-
-              }
-
-            </h2>
-
-          </div>
-
-          <div className="bg-white rounded-2xl p-4 shadow-sm">
-
-            <p className="text-gray-500 text-xs md:text-sm">
-
-              Resolved
-
-            </p>
-
-            <h2 className="text-3xl md:text-4xl font-bold text-green-500 mt-2">
-
-              {
-
-                complaints.filter(
-
-                  item => item.status === "Resolved"
-
-                ).length
-
-              }
-
-            </h2>
-
-          </div>
-
-        </div>
-
+</div>
         {/* FILTERS */}
 
         <div className="bg-white rounded-3xl p-5 shadow-sm mb-8">
@@ -242,12 +233,6 @@ function Complaints() {
 
               </option>
 
-              <option value="IT">
-
-                IT
-
-              </option>
-
               <option value="Housekeeping">
 
                 Housekeeping
@@ -285,6 +270,10 @@ function Complaints() {
                 Pending
 
               </option>
+
+<option value="On Hold">
+  On Hold
+</option>
 
               <option value="Resolved">
 

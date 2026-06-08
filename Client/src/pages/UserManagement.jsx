@@ -131,10 +131,6 @@ function UserManagement() {
                 className="w-full border rounded-xl px-4 py-3"
               >
 
-                <option value="IT">
-                  IT
-                </option>
-
                 <option value="Maintenance">
                   Maintenance
                 </option>

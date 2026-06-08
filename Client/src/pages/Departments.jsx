@@ -172,8 +172,103 @@ function Departments() {
 
   const HK = getDepartmentData("Housekeeping");
 
-  const MT = getDepartmentData("Maintenance");
+  const MTComplaints = complaints.filter(
+  item =>
+    item.category === "Maintenance" ||
+    item.category === "IT"
+);
 
+const pending = MTComplaints.filter(
+  item => item.status === "Pending"
+).length;
+
+const resolved = MTComplaints.filter(
+  item => item.status === "Resolved"
+).length;
+
+const resolvedItems = MTComplaints.filter(
+  item => item.status === "Resolved"
+);
+
+let avgMinutes = 0;
+
+if (resolvedItems.length > 0) {
+
+  const totalMinutes =
+    resolvedItems.reduce(
+      (acc, item) => {
+
+        const created =
+          new Date(item.createdAt);
+
+        const updated =
+          new Date(item.updatedAt);
+
+        const diff = Math.floor(
+          (updated - created) /
+          1000 /
+          60
+        );
+
+        return acc + diff;
+
+      },
+      0
+    );
+
+  avgMinutes = Math.floor(
+    totalMinutes /
+    resolvedItems.length
+  );
+
+}
+
+let health = "Excellent";
+let color = "green";
+
+if (pending === 0) {
+
+  health = "Excellent";
+  color = "green";
+
+}
+
+else if (pending <= 3) {
+
+  health = "Active";
+  color = "blue";
+
+}
+
+else if (pending <= 6) {
+
+  health = "Busy";
+  color = "yellow";
+
+}
+
+else {
+
+  health = "Critical";
+  color = "red";
+
+}
+
+const MT = {
+
+  total: MTComplaints.length,
+
+  pending,
+
+  resolved,
+
+  avgMinutes,
+
+  health,
+
+  color,
+
+};
   return (
 
     <Layout>
@@ -200,123 +295,7 @@ function Departments() {
 
         {/* DEPARTMENT CARDS */}
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-          {/* IT */}
-
-          <div className="bg-white rounded-3xl shadow-sm p-8 border border-purple-100">
-
-            <div className="flex items-center justify-between mb-8">
-
-              <div className="bg-purple-100 w-20 h-20 rounded-3xl flex items-center justify-center">
-
-                <Laptop size={40} className="text-purple-600" />
-
-              </div>
-
-              <span
-
-                className={`px-4 py-2 rounded-xl text-sm font-bold text-white
-
-                ${IT.color === "green"
-
-                  ? "bg-green-500"
-
-                  : IT.color === "blue"
-
-                  ? "bg-blue-500"
-
-                  : IT.color === "yellow"
-
-                  ? "bg-yellow-500"
-
-                  : "bg-red-500"
-
-                }`}
-
-              >
-
-                {IT.health}
-
-              </span>
-
-            </div>
-
-            <h2 className="text-3xl font-bold text-gray-800 mb-6">
-
-              IT Department
-
-            </h2>
-
-            <div className="space-y-5">
-
-              <div className="flex justify-between">
-
-                <span className="text-gray-500">
-
-                  Total Complaints
-
-                </span>
-
-                <span className="font-bold text-gray-800">
-
-                  {IT.total}
-
-                </span>
-
-              </div>
-
-              <div className="flex justify-between">
-
-                <span className="text-gray-500">
-
-                  Pending
-
-                </span>
-
-                <span className="font-bold text-red-500">
-
-                  {IT.pending}
-
-                </span>
-
-              </div>
-
-              <div className="flex justify-between">
-
-                <span className="text-gray-500">
-
-                  Resolved
-
-                </span>
-
-                <span className="font-bold text-green-500">
-
-                  {IT.resolved}
-
-                </span>
-
-              </div>
-
-              <div className="flex justify-between">
-
-                <span className="text-gray-500">
-
-                  Avg Resolution
-
-                </span>
-
-                <span className="font-bold text-blue-600">
-
-                  {IT.avgMinutes} mins
-
-                </span>
-
-              </div>
-
-            </div>
-
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
           {/* HOUSEKEEPING */}
 

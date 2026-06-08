@@ -242,6 +242,14 @@ function MaintenanceGuest() {
                 Kettle Not Working
               </option>
 
+              <option value="WiFi">
+                WiFi
+              </option>
+
+              <option value="TV">
+                TV
+              </option>
+
               <option value="Others">
                 Others
               </option>

@@ -3,8 +3,6 @@ import {
 
   Wrench,
 
-  Laptop,
-
   Sparkles,
 
   UtensilsCrossed,
@@ -15,301 +13,226 @@ import {
 
   WashingMachine,
 
-  Wifi,
-
 } from "lucide-react";
 
 function GuestPortal() {
 
   const navigate = useNavigate();
+return (
 
-  return (
+  <div className="min-h-screen bg-gradient-to-br from-[#eef4ff] via-[#f7f9fc] to-[#ffffff] p-4">
 
-    <div className="min-h-screen bg-gradient-to-br from-[#eef4ff] via-[#f7f9fc] to-[#ffffff] p-4 md:p-10">
+    <div className="max-w-md mx-auto">
 
-      <div className="max-w-7xl mx-auto">
+      {/* HEADER */}
 
-        {/* TOP BAR */}
+      <div className="text-center py-4">
 
-        <div className="flex flex-col md:flex-row justify-between items-center mb-14">
+        <h1 className="text-3xl font-bold text-gray-800">
 
-          <div>
+          Downtown Hotel
 
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-3">
+        </h1>
 
-              Downtown Hotel
+        <p className="text-gray-500 mt-2">
 
-            </h1>
+          Guest Service Hub
 
-            <p className="text-gray-500 text-lg md:text-xl">
+        </p>
 
-              Smart Guest Experience Portal
+      </div>
 
-            </p>
+      {/* ASSISTANCE */}
 
-          </div>
+      <div className="mb-8">
 
-          <div className="mt-6 md:mt-0 bg-white px-6 py-4 rounded-2xl shadow-sm flex items-center gap-3">
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">
 
-            <Wifi className="text-green-500" />
+          Need Assistance?
 
-            <span className="text-gray-700 font-semibold">
+        </h2>
 
-              Connected Services
+        <div className="space-y-4">
+
+          <div
+
+            onClick={() => navigate("/maintenance")}
+
+            className="bg-white rounded-3xl p-5 shadow-sm flex items-center justify-between cursor-pointer hover:shadow-lg transition"
+
+          >
+
+            <div className="flex items-center gap-4">
+
+              <div className="bg-yellow-100 w-14 h-14 rounded-2xl flex items-center justify-center">
+
+                <Wrench size={28} className="text-yellow-600" />
+
+              </div>
+
+              <div>
+
+                <h3 className="font-bold text-gray-800">
+
+                  Maintenance
+
+                </h3>
+
+                <p className="text-sm text-gray-500">
+
+                  AC, TV, WiFi, Plumbing
+
+                </p>
+
+              </div>
+
+            </div>
+
+            <span className="text-xl text-gray-400">
+
+              ›
 
             </span>
 
           </div>
 
-        </div>
+          <div
 
-        {/* MAIN SERVICE SECTION */}
+            onClick={() => navigate("/housekeeping")}
 
-        <div className="mb-16">
+            className="bg-white rounded-3xl p-5 shadow-sm flex items-center justify-between cursor-pointer hover:shadow-lg transition"
 
-          <h2 className="text-3xl font-bold text-gray-800 mb-8">
+          >
 
-            Guest Support Services
+            <div className="flex items-center gap-4">
 
-          </h2>
+              <div className="bg-blue-100 w-14 h-14 rounded-2xl flex items-center justify-center">
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-            {/* IT */}
-
-            <div
-  onClick={() => navigate("/it")}
-  className="bg-white rounded-3xl p-10 shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-purple-100 cursor-pointer"
->
-
-              <div className="bg-purple-100 w-24 h-24 rounded-3xl flex items-center justify-center mb-8">
-
-                <Laptop size={45} className="text-purple-600" />
+                <Sparkles size={28} className="text-blue-600" />
 
               </div>
 
-              <h3 className="text-3xl font-bold text-gray-800 mb-4">
+              <div>
 
-                IT Support
+                <h3 className="font-bold text-gray-800">
 
-              </h3>
+                  Housekeeping
 
-              <p className="text-gray-500 leading-7">
+                </h3>
 
-                WiFi connectivity, TV issues, smart device assistance and all technical support requests.
+                <p className="text-sm text-gray-500">
 
-              </p>
+                  Cleaning, Towels, Toiletries
 
-            </div>
-
-            {/* HOUSEKEEPING */}
-
-            <div
-  onClick={() => navigate("/housekeeping")}
-  className="bg-white rounded-3xl p-10 shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-blue-100 cursor-pointer"
->
-
-              <div className="bg-blue-100 w-24 h-24 rounded-3xl flex items-center justify-center mb-8">
-
-                <Sparkles size={45} className="text-blue-600" />
+                </p>
 
               </div>
 
-              <h3 className="text-3xl font-bold text-gray-800 mb-4">
-
-                Housekeeping
-
-              </h3>
-
-              <p className="text-gray-500 leading-7">
-
-                Cleaning requests, room service support, toiletries and housekeeping assistance.
-
-              </p>
-
             </div>
 
-            {/* MAINTENANCE */}
+            <span className="text-xl text-gray-400">
 
-           <div
-  onClick={() => navigate("/maintenance")}
-  className="bg-white rounded-3xl p-10 shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-yellow-100 cursor-pointer"
->
-
-              <div className="bg-yellow-100 w-24 h-24 rounded-3xl flex items-center justify-center mb-8">
-
-                <Wrench size={45} className="text-yellow-600" />
-
-              </div>
-
-              <h3 className="text-3xl font-bold text-gray-800 mb-4">
-
-                Maintenance
-
-              </h3>
-
-              <p className="text-gray-500 leading-7">
-
-                AC repair, electrical issues, plumbing support and room maintenance services.
-
-              </p>
-
-            </div>
-
-          </div>
-
-        </div>
-
-        {/* FUTURE SERVICES */}
-
-        <div>
-
-          <div className="flex items-center justify-between mb-8">
-
-            <div>
-
-              <h2 className="text-3xl font-bold text-gray-800">
-
-                Upcoming Smart Services
-
-              </h2>
-
-              <p className="text-gray-500 mt-2">
-
-                Future developments planned for Downtown Hotel
-
-              </p>
-
-            </div>
-
-            <span className="bg-green-100 text-green-600 px-5 py-2 rounded-xl font-semibold">
-
-              Future Expansion
+              ›
 
             </span>
 
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-
-            {/* FOOD */}
-
-            <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 opacity-90">
-
-              <div className="bg-red-100 w-20 h-20 rounded-2xl flex items-center justify-center mb-6">
-
-                <UtensilsCrossed size={35} className="text-red-500" />
-
-              </div>
-
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">
-
-                Food Ordering
-
-              </h3>
-
-              <p className="text-gray-500">
-
-                In-room dining and restaurant ordering directly from your phone.
-
-              </p>
-
-            </div>
-
-            {/* LAUNDRY */}
-
-            <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 opacity-90">
-
-              <div className="bg-cyan-100 w-20 h-20 rounded-2xl flex items-center justify-center mb-6">
-
-                <WashingMachine size={35} className="text-cyan-600" />
-
-              </div>
-
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">
-
-                Laundry
-
-              </h3>
-
-              <p className="text-gray-500">
-
-                Schedule laundry pickup and track cleaning progress digitally.
-
-              </p>
-
-            </div>
-
-            {/* ROOM SERVICE */}
-
-            <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 opacity-90">
-
-              <div className="bg-orange-100 w-20 h-20 rounded-2xl flex items-center justify-center mb-6">
-
-                <BellRing size={35} className="text-orange-500" />
-
-              </div>
-
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">
-
-                Room Service
-
-              </h3>
-
-              <p className="text-gray-500">
-
-                Request extra pillows, towels and premium room assistance instantly.
-
-              </p>
-
-            </div>
-
-            {/* TAXI */}
-
-            <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 opacity-90">
-
-              <div className="bg-green-100 w-20 h-20 rounded-2xl flex items-center justify-center mb-6">
-
-                <CarTaxiFront size={35} className="text-green-600" />
-
-              </div>
-
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">
-
-                Taxi Booking
-
-              </h3>
-
-              <p className="text-gray-500">
-
-                Book local transport and airport pickups directly from the portal.
-
-              </p>
-
-            </div>
-
-          </div>
-
-        </div>
-
-        {/* FOOTER */}
-
-        <div className="mt-16 text-center">
-
-          <p className="text-gray-400 text-sm md:text-base">
-
-            Downtown Hotel • Smart Hospitality Experience Platform
-
-          </p>
 
         </div>
 
       </div>
 
+      {/* UPCOMING SERVICES */}
+
+      <div>
+
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">
+
+          Upcoming Services
+
+        </h2>
+
+        <div className="grid grid-cols-2 gap-4">
+
+          <div className="bg-white rounded-3xl p-5 shadow-sm">
+
+            <UtensilsCrossed
+              size={30}
+              className="text-red-500 mb-3"
+            />
+
+            <h3 className="font-bold text-gray-800">
+
+              Food Ordering
+
+            </h3>
+
+          </div>
+
+          <div className="bg-white rounded-3xl p-5 shadow-sm">
+
+            <WashingMachine
+              size={30}
+              className="text-cyan-600 mb-3"
+            />
+
+            <h3 className="font-bold text-gray-800">
+
+              Laundry
+
+            </h3>
+
+          </div>
+
+          <div className="bg-white rounded-3xl p-5 shadow-sm">
+
+            <BellRing
+              size={30}
+              className="text-orange-500 mb-3"
+            />
+
+            <h3 className="font-bold text-gray-800">
+
+              Room Service
+
+/</h3>
+
+          </div>
+
+          <div className="bg-white rounded-3xl p-5 shadow-sm">
+
+            <CarTaxiFront
+              size={30}
+              className="text-green-600 mb-3"
+            />
+
+            <h3 className="font-bold text-gray-800">
+
+              Taxi Booking
+
+            </h3>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div className="text-center py-4">
+
+        <p className="text-gray-400 text-sm">
+
+          Downtown Hotel • Available 24/7
+
+        </p>
+
+      </div>
+
     </div>
 
-  );
+  </div>
+
+);
 
 }
-
 export default GuestPortal;
