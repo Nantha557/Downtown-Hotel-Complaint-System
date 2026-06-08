@@ -70,6 +70,81 @@ const register = async (req, res) => {
 
 };
 
+
+// GET ALL USERS
+const getUsers = async (req, res) => {
+
+  try {
+
+    const users = await User.find().select("-password");
+
+    res.json(users);
+
+  } catch (error) {
+
+    res.status(500).json({
+      message: "Failed to fetch users",
+    });
+
+  }
+
+};
+
+// UPDATE ROLE
+const updateUserRole = async (req, res) => {
+
+  try {
+
+    const user = await User.findByIdAndUpdate(
+
+      req.params.id,
+
+      {
+        role: req.body.role,
+      },
+
+      {
+        new: true,
+      }
+
+    );
+
+    res.json(user);
+
+  } catch (error) {
+
+    res.status(500).json({
+      message: "Failed to update role",
+    });
+
+  }
+
+};
+
+// DELETE USER
+const deleteUser = async (req, res) => {
+
+  try {
+
+    await User.findByIdAndDelete(
+      req.params.id
+    );
+
+    res.json({
+      message: "User deleted",
+    });
+
+  } catch (error) {
+
+    res.status(500).json({
+      message: "Delete failed",
+    });
+
+  }
+
+};
+
+
 const login = async (req, res) => {
 
   try {
@@ -139,4 +214,7 @@ const login = async (req, res) => {
 module.exports = {
   login,
   register,
+  getUsers,
+  updateUserRole,
+  deleteUser,
 };
