@@ -70,7 +70,7 @@ function Layout({ children }) {
 
         <h1 className="text-2xl font-bold">
 
-          Downtown
+          Downtown Business hotel
 
         </h1>
 
@@ -204,11 +204,11 @@ function Layout({ children }) {
 
         {/* LOGO */}
 
-        <div className="mb-12">
+        <div className="mb-2">
 
-          <h1 className="text-4xl font-bold tracking-wide">
+          <h1 className="text-2xl font-bold tracking-wide">
 
-            DownTown
+            DownTown Business Hotel
 
           </h1>
 
