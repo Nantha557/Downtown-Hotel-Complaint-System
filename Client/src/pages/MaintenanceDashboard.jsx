@@ -365,7 +365,7 @@ setComplaints(recentComplaints);
 
             <p className="text-gray-500 text-xs md:text-sm">
 
-              Pending
+              To Complete
 
             </p>
 
@@ -389,7 +389,7 @@ setComplaints(recentComplaints);
 
             <p className="text-gray-500 text-xs md:text-sm">
 
-              Resolved
+              Completed
 
             </p>
 
@@ -555,14 +555,14 @@ setComplaints(recentComplaints);
                             onClick={() => markResolved(item._id)}
                             className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl"
                           >
-                            Resolve
+                            Completed
                           </button>
 
                           <button
                             onClick={() => markHold(item._id)}
                             className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl"
                           >
-                            Hold
+                            Pending
                           </button>
 
                         </div>
@@ -573,7 +573,7 @@ setComplaints(recentComplaints);
 
                         <span className="bg-green-100 text-green-600 px-4 py-2 rounded-xl text-sm font-semibold">
 
-                          Resolved
+                          Completed
 
                         </span>
 
@@ -585,7 +585,7 @@ setComplaints(recentComplaints);
 
                           <span className="bg-yellow-100 text-yellow-700 px-4 py-2 rounded-xl text-sm font-semibold">
 
-                            On Hold
+                            Pending
 
                           </span>
 
@@ -599,7 +599,7 @@ setComplaints(recentComplaints);
                             onClick={() => markResolved(item._id)}
                             className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl mt-2"
                           >
-                            Resolve
+                            Completed
                           </button>
 
                         </div>

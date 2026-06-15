@@ -167,7 +167,7 @@ const onHoldComplaints =
 
   <div className="bg-white rounded-2xl p-5 shadow-sm">
     <p className="text-gray-500 text-sm">
-      Resolved
+      Completed
     </p>
     <h2 className="text-3xl font-bold text-green-500 mt-2">
       {resolvedComplaints}
@@ -176,7 +176,7 @@ const onHoldComplaints =
 
   <div className="bg-white rounded-2xl p-5 shadow-sm">
     <p className="text-gray-500 text-sm">
-      Pending
+      To Complete
     </p>
     <h2 className="text-3xl font-bold text-red-500 mt-2">
       {pendingComplaints}
@@ -185,7 +185,7 @@ const onHoldComplaints =
 
   <div className="bg-white rounded-2xl p-5 shadow-sm">
     <p className="text-gray-500 text-sm">
-      On Hold
+      Pending
     </p>
     <h2 className="text-3xl font-bold text-yellow-500 mt-2">
       {onHoldComplaints}
@@ -267,17 +267,17 @@ const onHoldComplaints =
 
               <option value="Pending">
 
-                Pending
+                To Complete
 
               </option>
 
 <option value="On Hold">
-  On Hold
+  Pending
 </option>
 
               <option value="Resolved">
 
-                Resolved
+                Completed
 
               </option>
 

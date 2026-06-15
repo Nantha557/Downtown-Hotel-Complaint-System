@@ -368,7 +368,7 @@ setNotifiedComplaints(newIds);
 
             <p className="text-gray-500 text-xs md:text-sm">
 
-              Pending
+              To Complete
 
             </p>
 
@@ -617,7 +617,7 @@ ${timer.minutes >= settings.redTime + 15
 
                         <span className="px-4 py-2 rounded-xl text-sm font-semibold bg-red-100 text-red-600 whitespace-nowrap">
 
-                          Pending
+                          To Complete
 
                         </span>
 
@@ -627,7 +627,7 @@ ${timer.minutes >= settings.redTime + 15
 
                         <span className="px-4 py-2 rounded-xl text-sm font-semibold bg-green-100 text-green-600 whitespace-nowrap">
 
-                          Resolved
+                          Completed
 
                         </span>
 
@@ -639,7 +639,7 @@ ${timer.minutes >= settings.redTime + 15
 
                           <span className="px-4 py-2 rounded-xl text-sm font-semibold bg-yellow-100 text-yellow-700 whitespace-nowrap">
 
-                            On Hold
+                            Pending
 
                           </span>
 

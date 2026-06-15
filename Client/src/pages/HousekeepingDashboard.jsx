@@ -361,7 +361,7 @@ setComplaints(recentComplaints);
 
             <p className="text-gray-500 text-xs md:text-sm">
 
-              Pending
+              To Complete
 
             </p>
 
@@ -385,7 +385,7 @@ setComplaints(recentComplaints);
 
             <p className="text-gray-500 text-xs md:text-sm">
 
-              Resolved
+              Completed
 
             </p>
 
@@ -557,14 +557,14 @@ ${timer.minutes >= settings.redTime + 15
                             onClick={() => markResolved(item._id)}
                             className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl"
                           >
-                            Resolve
+                            Completed
                           </button>
 
                           <button
                             onClick={() => markHold(item._id)}
                             className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl"
                           >
-                            Hold
+                            Pending
                           </button>
 
                         </div>
@@ -575,7 +575,7 @@ ${timer.minutes >= settings.redTime + 15
 
                         <span className="bg-green-100 text-green-600 px-4 py-2 rounded-xl text-sm font-semibold">
 
-                          Resolved
+                          Completed
 
                         </span>
 
@@ -587,7 +587,7 @@ ${timer.minutes >= settings.redTime + 15
 
                           <span className="bg-blue-100 text-blue-700 px-4 py-2 rounded-xl text-sm font-semibold">
 
-                            On Hold
+                            Pending
 
                           </span>
 
@@ -601,7 +601,7 @@ ${timer.minutes >= settings.redTime + 15
                             onClick={() => markResolved(item._id)}
                             className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl mt-2"
                           >
-                            Resolve
+                            Completed
                           </button>
 
                         </div>
