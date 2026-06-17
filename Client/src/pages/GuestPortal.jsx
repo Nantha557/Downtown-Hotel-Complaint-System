@@ -142,91 +142,45 @@ return (
 
       </div>
 
-      {/* UPCOMING SERVICES */}
+      {/* AVAILABLE SERVICES */}
 
-      <div>
+<div>
 
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">
+  <h2 className="text-2xl font-bold text-gray-800 mb-4">
 
-          Upcoming Services
+    Available Services
 
-        </h2>
+  </h2>
 
-        <div className="grid grid-cols-2 gap-4">
+  <div className="grid grid-cols-1 gap-4">
 
-          <div className="bg-white rounded-3xl p-5 shadow-sm">
+    <div
+      onClick={() => navigate("/https://downtown-food-ordering-system.vercel.app/menu")}
+      className="bg-white rounded-3xl p-5 shadow-sm cursor-pointer hover:shadow-lg transition"
+    >
 
-            <UtensilsCrossed
-              size={30}
-              className="text-red-500 mb-3"
-            />
+      <UtensilsCrossed
+        size={30}
+        className="text-red-500 mb-3"
+      />
 
-            <h3 className="font-bold text-gray-800">
+      <h3 className="font-bold text-gray-800">
 
-              Food Ordering
+        Food Ordering
 
-            </h3>
+      </h3>
 
-          </div>
+      <p className="text-sm text-gray-500 mt-1">
 
-          <div className="bg-white rounded-3xl p-5 shadow-sm">
+        Browse menu and place room service orders
 
-            <WashingMachine
-              size={30}
-              className="text-cyan-600 mb-3"
-            />
+      </p>
 
-            <h3 className="font-bold text-gray-800">
+    </div>
 
-              Laundry
+  </div>
 
-            </h3>
-
-          </div>
-
-          <div className="bg-white rounded-3xl p-5 shadow-sm">
-
-            <BellRing
-              size={30}
-              className="text-orange-500 mb-3"
-            />
-
-            <h3 className="font-bold text-gray-800">
-
-              Room Service
-
-/</h3>
-
-          </div>
-
-          <div className="bg-white rounded-3xl p-5 shadow-sm">
-
-            <CarTaxiFront
-              size={30}
-              className="text-green-600 mb-3"
-            />
-
-            <h3 className="font-bold text-gray-800">
-
-              Taxi Booking
-
-            </h3>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <div className="text-center py-4">
-
-        <p className="text-gray-400 text-sm">
-
-          Downtown Hotel • Available 24/7
-
-        </p>
-
-      </div>
+</div>
 
     </div>
 
