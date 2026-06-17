@@ -155,7 +155,7 @@ return (
   <div className="grid grid-cols-1 gap-4">
 
     <div
-      onClick={() => navigate("/https://downtown-food-ordering-system.vercel.app/menu")}
+      onClick={() => navigate("/menu")}
       className="bg-white rounded-3xl p-5 shadow-sm cursor-pointer hover:shadow-lg transition"
     >
 
