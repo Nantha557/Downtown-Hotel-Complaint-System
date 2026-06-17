@@ -18,6 +18,10 @@ import {
 function GuestPortal() {
 
   const navigate = useNavigate();
+
+  const FOOD_ORDERING_URL =
+  "https://downtown-food-ordering-system.vercel.app/menu";
+
 return (
 
   <div className="min-h-screen bg-gradient-to-br from-[#eef4ff] via-[#f7f9fc] to-[#ffffff] p-4">
@@ -155,7 +159,7 @@ return (
   <div className="grid grid-cols-1 gap-4">
 
     <div
-      onClick={() => navigate("/menu")}
+      onClick={() => window.location.href = FOOD_ORDERING_URL}  
       className="bg-white rounded-3xl p-5 shadow-sm cursor-pointer hover:shadow-lg transition"
     >
 
