@@ -148,7 +148,7 @@ return (
 
         <h2 className="text-2xl font-bold text-gray-800 mb-4">
 
-          Upcoming Services
+          Available Services
 
         </h2>
 
@@ -185,51 +185,7 @@ return (
 
         </div>
 
-          <div className="bg-white rounded-3xl p-5 shadow-sm">
-
-            <WashingMachine
-              size={30}
-              className="text-cyan-600 mb-3"
-            />
-
-            <h3 className="font-bold text-gray-800">
-
-              Laundry
-
-            </h3>
-
-          </div>
-
-          <div className="bg-white rounded-3xl p-5 shadow-sm">
-
-            <BellRing
-              size={30}
-              className="text-orange-500 mb-3"
-            />
-
-            <h3 className="font-bold text-gray-800">
-
-              Room Service
-
-/</h3>
-
-          </div>
-
-          <div className="bg-white rounded-3xl p-5 shadow-sm">
-
-            <CarTaxiFront
-              size={30}
-              className="text-green-600 mb-3"
-            />
-
-            <h3 className="font-bold text-gray-800">
-
-              Taxi Booking
-
-            </h3>
-
-          </div>
-
+          
         </div>
 
       </div>
