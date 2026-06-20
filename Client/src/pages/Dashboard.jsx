@@ -328,21 +328,56 @@ setNotifiedComplaints(newIds);
 
         {/* HEADER */}
 
-        <div className="mb-10">
+        <div className="
+flex
+justify-between
+items-start
+mb-10
+">
 
-          <h1 className="text-3xl md:text-5xl font-bold text-gray-800">
+  <div>
 
-            Hotel Operations
+    <h1 className="
+    text-3xl
+    md:text-5xl
+    font-bold
+    text-gray-800
+    ">
 
-          </h1>
+      Hotel Operations
 
-          <p className="text-gray-500 mt-2 text-sm md:text-lg">
+    </h1>
 
-            Real-time Complaint Monitoring Dashboard
+    <p className="
+    text-gray-500
+    mt-2
+    text-sm
+    md:text-lg
+    ">
 
-          </p>
+      👤 Logged in as:
+      <span className="font-semibold ml-1">
 
-        </div>
+        {localStorage.getItem("username")}
+
+      </span>
+
+    </p>
+
+    <p className="
+    text-gray-500
+    mt-1
+    text-sm
+    md:text-lg
+    ">
+
+      Real-time Complaint Monitoring Dashboard
+
+    </p>
+
+  </div>
+
+</div>
 
         {/* STATS */}
 
