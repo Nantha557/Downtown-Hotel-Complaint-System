@@ -335,7 +335,7 @@ setNotifiedComplaints(newIds);
 flex
 justify-between
 items-start
-mb-10
+mb-5
 ">
 
   <div>
@@ -386,7 +386,7 @@ mb-10
 
         {/* STATS */}
 
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6 mb-10">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6 mb-5">
 
           <div className="bg-white rounded-3xl p-4 md:p-6 shadow-sm">
 
@@ -472,9 +472,9 @@ mb-10
 
         {/* TABLE */}
 
-        <div className="bg-white rounded-3xl shadow-sm overflow-hidden">
+        <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
 
-          <div className="p-6 border-b">
+          <div className="p-5 border-b">
 
             <h2 className="text-2xl font-semibold text-gray-800">
 

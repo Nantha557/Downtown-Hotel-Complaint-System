@@ -328,7 +328,7 @@ setComplaints(recentComplaints);
 flex
 justify-between
 items-start
-mb-8
+mb-5
 ">
 
   <div>
@@ -373,7 +373,7 @@ mb-8
 
         {/* STATS */}
 
-        <div className="grid grid-cols-3 gap-3 md:gap-5 mb-6">
+        <div className="grid grid-cols-3 gap-3 md:gap-5 mb-5">
 
           <div className="bg-white rounded-2xl p-4 md:p-6 shadow-sm">
 
