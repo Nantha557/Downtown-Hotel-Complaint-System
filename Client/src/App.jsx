@@ -23,6 +23,13 @@ import HousekeepingGuest from "./pages/HousekeepingGuest";
 
 import SupervisorDashboard from "./pages/SupervisorDashboard";
 
+import { registerSW }
+from "virtual:pwa-register";
+
+registerSW({
+  immediate: true,
+});
+
 function App() {
 
   return (

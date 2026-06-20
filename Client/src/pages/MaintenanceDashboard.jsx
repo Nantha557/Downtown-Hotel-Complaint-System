@@ -345,6 +345,7 @@ mb-8
       Maintenance Department
 
     </h1>
+    <InstallButton />
 
     <p className="
     text-gray-500

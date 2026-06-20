@@ -341,6 +341,7 @@ mb-8
       Housekeeping Department
 
     </h1>
+    <InstallButton />
 
     <p className="
     text-gray-500

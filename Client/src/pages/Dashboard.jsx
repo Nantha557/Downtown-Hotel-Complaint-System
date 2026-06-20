@@ -348,6 +348,8 @@ mb-10
 
     </h1>
 
+    <InstallButton />
+
     <p className="
     text-gray-500
     mt-2
