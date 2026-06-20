@@ -399,7 +399,7 @@ mb-8
 
             <p className="text-gray-500 text-xs md:text-sm">
 
-              To Com[lete]
+              To Complete
 
             </p>
 
