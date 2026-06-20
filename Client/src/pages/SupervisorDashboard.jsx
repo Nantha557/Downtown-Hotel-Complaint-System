@@ -325,21 +325,55 @@ setComplaints(recentComplaints);
 
         {/* HEADER */}
 
-        <div className="mb-8">
+      <div className="
+flex
+justify-between
+items-start
+mb-8
+">
 
-          <h1 className="text-3xl md:text-5xl font-bold text-yellow-600 mb-2">
+  <div>
 
-            Supervisor Department
+    <h1 className="
+    text-3xl
+    md:text-5xl
+    font-bold
+    text-yellow-600
+    mb-2
+    ">
 
-          </h1>
+      Supervisor Department
 
-          <p className="text-gray-500 text-sm md:text-lg">
+    </h1>
 
-            Live maintenance and housekeeping complaint management system
+    <p className="
+    text-gray-500
+    text-sm
+    md:text-lg
+    ">
 
-          </p>
+      👤 Logged in as:
+      <span className="font-semibold ml-1">
 
-        </div>
+        {localStorage.getItem("username")}
+
+      </span>
+
+    </p>
+
+    <p className="
+    text-gray-500
+    text-sm
+    md:text-lg
+    ">
+
+      Live maintenance and housekeeping complaint management system
+
+    </p>
+
+  </div>
+
+</div>
 
         {/* STATS */}
 
