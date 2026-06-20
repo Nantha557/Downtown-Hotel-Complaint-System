@@ -10,6 +10,9 @@ import alertSound from "../assets/alert.wav";
 
 import notificationSound from "../assets/notification.wav";
 
+import InstallButton
+from "../components/InstallButton";
+
 function HousekeepingDashboard() {
 
   const [complaints, setComplaints] = useState([]);
