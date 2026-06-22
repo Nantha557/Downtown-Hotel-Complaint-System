@@ -24,7 +24,7 @@ function MaintenanceDashboard() {
 
   const [, setRefresh] = useState(0);
 
-  const lastAlertTime = useRef(0);
+  const alertedComplaints = useRef([]);
 
   const notifiedComplaints = useRef([]);
 
@@ -125,8 +125,6 @@ setComplaints(recentComplaints);
 
       });
 
-      setComplaints(filtered);
-
       // CRITICAL ALERT SOUND
 
       const criticalComplaints = filtered.filter(
@@ -156,45 +154,47 @@ setComplaints(recentComplaints);
       );
 
       // PLAY SOUND EVERY 1 MIN
+criticalComplaints.forEach(item => {
 
-      if (criticalComplaints.length > 0) {
+  if (
+    !alertedComplaints.current.includes(
+      item._id
+    )
+  ) {
 
-        const now = Date.now();
+    const audio =
+      new Audio(alertSound);
 
-        if (
+    audio.volume = 0.7;
 
-          now - lastAlertTime.current > 60000
+    audio.play();
 
-        ) {
+    toast.error(
+      `🚨 Critical Delay - Room ${item.roomNo}`
+    );
 
-          const latestRoom = criticalComplaints[0];
+    alertedComplaints.current.push(
+      item._id
+    );
 
-          const audio = new Audio(alertSound);
+  }
 
-          audio.volume = 0.7;
+});
 
-          audio.play();
+alertedComplaints.current =
+  alertedComplaints.current.filter(id =>
 
-          toast.error(
+    filtered.some(
 
-            `🚨 Critical Delay - Room ${latestRoom.roomNo}`,
+      item =>
 
-            {
+        item._id === id &&
 
-              position: "top-right",
+        item.status === "Pending"
 
-              autoClose: 5000,
+    )
 
-            }
-
-          );
-
-          lastAlertTime.current = now;
-
-        }
-
-      }
-
+  );
     } catch (error) {
 
       console.log(error);
