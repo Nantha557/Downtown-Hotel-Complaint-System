@@ -155,16 +155,6 @@ setComplaints(recentComplaints);
 
       );
 
-
-      const audio = new Audio(alertSound);
-
-audio.play()
-.then(() => {
-  console.log("ALARM PLAYED");
-})
-.catch((err) => {
-  console.log("ALARM FAILED", err);
-});
       // PLAY SOUND EVERY 1 MIN
 
       if (criticalComplaints.length > 0) {
