@@ -4,9 +4,63 @@ import { useNavigate } from "react-router-dom";
 
 import API from "../services/api";
 
+import { useEffect, useState } from "react";
+
 function Login() {
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+
+  const token =
+    localStorage.getItem("token");
+
+  const role =
+    localStorage.getItem("role");
+
+  if (token && role) {
+
+    if (role === "Admin") {
+
+      navigate(
+        "/admin-orders"
+      );
+
+    }
+
+    else if (
+      role === "Kitchen"
+    ) {
+
+      navigate(
+        "/kitchen-orders"
+      );
+
+    }
+
+    else if (
+      role === "RoomService"
+    ) {
+
+      navigate(
+        "/room-service"
+      );
+
+    }
+
+    else if (
+      role === "Manager"
+    ) {
+
+      navigate(
+        "/menu-management"
+      );
+
+    }
+
+  }
+
+}, []);
 
   const [formData, setFormData] = useState({
 
