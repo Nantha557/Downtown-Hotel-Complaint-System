@@ -170,7 +170,7 @@ return (
 
       <h3 className="font-bold text-gray-800">
 
-        Food Ordering
+        Room Service
 
       </h3>
 
