@@ -34,7 +34,7 @@ return (
 
         <h1 className="text-3xl font-bold text-gray-800">
 
-          Downtown Hotel
+          Downtown Business Hotel
 
         </h1>
 
@@ -149,12 +149,6 @@ return (
       {/* AVAILABLE SERVICES */}
 
 <div>
-
-  <h2 className="text-2xl font-bold text-gray-800 mb-4">
-
-    Available Services
-
-  </h2>
 
   <div className="grid grid-cols-1 gap-4">
 
