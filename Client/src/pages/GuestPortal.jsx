@@ -7,6 +7,12 @@ import {
 
   UtensilsCrossed,
 
+  HandPlatter ,
+
+  Utensils ,
+
+  ChefHat,
+
   BellRing,
 
   CarTaxiFront,
@@ -52,11 +58,38 @@ return (
 
         <h2 className="text-2xl font-bold text-gray-800 mb-4">
 
-          Need Assistance?
+          At Your Assistance
 
         </h2>
 
         <div className="space-y-4">
+           
+          <div
+  onClick={() => (window.location.href = FOOD_ORDERING_URL)}
+  className="bg-white rounded-3xl p-5 shadow-sm flex items-center justify-between cursor-pointer hover:shadow-lg transition"
+>
+  <div className="flex items-center gap-4">
+
+    <div className="bg-red-100 w-14 h-14 rounded-2xl flex items-center justify-center">
+     <ChefHat  size={28} className="text-red-600" />
+    </div>
+
+    <div>
+      <h3 className="font-bold text-gray-800">
+        Room Service
+      </h3>
+
+      <p className="text-sm text-gray-500">
+        Browse menu and place room service orders
+      </p>
+    </div>
+
+  </div>
+
+  <span className="text-xl text-gray-400">
+    ›
+  </span>
+</div>
 
           <div
 
@@ -65,6 +98,7 @@ return (
             className="bg-white rounded-3xl p-5 shadow-sm flex items-center justify-between cursor-pointer hover:shadow-lg transition"
 
           >
+            
 
             <div className="flex items-center gap-4">
 
@@ -152,29 +186,7 @@ return (
 
   <div className="grid grid-cols-1 gap-4">
 
-    <div
-      onClick={() => window.location.href = FOOD_ORDERING_URL}  
-      className="bg-white rounded-3xl p-5 shadow-sm cursor-pointer hover:shadow-lg transition"
-    >
-
-      <UtensilsCrossed
-        size={30}
-        className="text-red-500 mb-3"
-      />
-
-      <h3 className="font-bold text-gray-800">
-
-        Room Service
-
-      </h3>
-
-      <p className="text-sm text-gray-500 mt-1">
-
-        Browse menu and place room service orders
-
-      </p>
-
-    </div>
+   
 
   </div>
 
