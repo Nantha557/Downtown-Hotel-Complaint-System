@@ -297,93 +297,91 @@ notifiedComplaints.current =
 
   // TIMER FUNCTION
 
-  const getTimer = (
+  // TIMER FUNCTION
 
-    createdAt,
+const getTimer = (
+  createdAt,
+  status,
+  updatedAt
+) => {
 
-    status,
+  const created = new Date(createdAt);
 
-    updatedAt
+  const endTime =
+    status === "Resolved" ||
+    status === "On Hold"
+      ? new Date(updatedAt)
+      : new Date();
 
-  ) => {
+  const diff = Math.floor(
+    (endTime - created) / 1000
+  );
 
-    const created = new Date(createdAt);
+  const hours = Math.floor(diff / 3600);
 
-    const endTime =
-  status === "Resolved" ||
-  status === "On Hold"
-    ? new Date(updatedAt)
-    : new Date();
+  const minutes = Math.floor(
+    (diff % 3600) / 60
+  );
 
-    const diff = Math.floor(
+  const seconds = diff % 60;
 
-      (endTime - created) / 1000
+  const time =
+    hours > 0
+      ? `${hours}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`
+      : `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 
-    );
-
-    const minutes = Math.floor(diff / 60);
-
-    const seconds = diff % 60;
-
-    return {
-
-      time: `${minutes}m ${seconds}s`,
-
-      minutes,
-
-    };
-
+  return {
+    time,
+    minutes: Math.floor(diff / 60),
   };
 
+};
   return (
 
     <Layout>
 
       <div className="p-4 md:p-8">
 
-        {/* HEADER */}
+       {/* HEADER */}
 
-       <div className="
-flex
-justify-between
-items-start
-mb-5
-">
+<div className="mb-4 md:mb-5">
 
   <div>
 
-    <h1 className="
-    text-3xl
-    md:text-5xl
-    font-bold
-    text-blue-600
-    mb-2
-    ">
+    <div className="flex items-center justify-between gap-3">
 
-      Housekeeping Department
+      <h1 className="
+        text-2xl
+        md:text-4xl
+        font-bold
+        text-blue-600
+      ">
+        Housekeeping Department
+      </h1>
 
-    </h1>
-    <InstallButton />
+      <InstallButton />
+
+    </div>
 
     <p className="
-    text-gray-500
-    text-sm
-    md:text-lg
+      text-gray-500
+      text-sm
+      md:text-base
+      mt-1
     ">
-
       👤 Logged in as:
-{localStorage.getItem("username")}
-
+      <span className="font-semibold ml-1 text-gray-700">
+        {localStorage.getItem("username")}
+      </span>
     </p>
 
     <p className="
-    text-gray-500
-    text-sm
-    md:text-lg
+      text-gray-500
+      text-sm
+      md:text-base
+      mt-1
     ">
-
       Live housekeeping complaint management system
-
     </p>
 
   </div>
@@ -464,9 +462,9 @@ mb-5
 
         <div className="bg-white rounded-3xl shadow-sm overflow-hidden">
 
-          <div className="p-6 border-b">
+          <div className="p-4 md:p-5 border-b">
 
-            <h2 className="text-2xl font-semibold text-gray-800">
+            <h2 className="text-xl md:text-2xl font-semibold text-gray-800">
 
               Active Housekeeping Complaints
 
@@ -482,31 +480,31 @@ mb-5
 
                 <tr>
 
-                  <th className="text-left p-5">
+                  <th className="text-left p-3 md:p-4">
 
                     Room
 
                   </th>
 
-                  <th className="text-left p-5">
+                  <th className="text-left p-3 md:p-4">
 
                     Complaint
 
                   </th>
 
-                  <th className="text-left p-5">
+                  <th className="text-left p-3 md:p-4">
 
                     Description
 
                   </th>
 
-                  <th className="text-left p-5">
+                  <th className="text-left p-3 md:p-4">
 
                     Timer
 
                   </th>
 
-                  <th className="text-left p-5">
+                  <th className="text-left p-3 md:p-4">
 
                     Status
 
@@ -535,7 +533,7 @@ mb-5
 
                       key={item._id}
 
-                      className={`border-b transition-all duration-500
+                     className={`border-b transition-all duration-500
 
 ${timer.minutes >= settings.redTime + 15
   ? "bg-red-100 animate-pulse"
@@ -548,19 +546,19 @@ ${timer.minutes >= settings.redTime + 15
 
                     >
 
-                      <td className="p-5 font-semibold">
+                      <td className="p-3 md:p-4 font-semibold">
 
                         {item.roomNo}
 
                       </td>
 
-                      <td className="p-5 font-medium text-gray-700">
+                      <td className="p-3 md:p-4 font-medium text-gray-700">
 
                         {item.complaint}
 
                       </td>
 
-                      <td className="p-5 text-gray-500 max-w-xs">
+                      <td className="p-3 md:p-4 text-gray-500 max-w-xs">
 
                         {item.description}
 
@@ -568,27 +566,20 @@ ${timer.minutes >= settings.redTime + 15
 
                       {/* TIMER */}
 
-                      <td className="p-5">
+                      <td className="p-3 md:p-4">
 
                         <span
 
                           className={`px-4 py-2 rounded-xl text-sm font-bold text-white
 
-                          ${timer.minutes < 20
-
-                            ? "bg-green-500"
-
-                            : timer.minutes < 30
-
-                            ? "bg-yellow-500"
-
-                            : timer.minutes < 45
-
-                            ? "bg-red-500"
-
-                            : "bg-red-800 animate-pulse"
-
-                          }`}
+                        ${timer.minutes < settings.yellowTime
+  ? "bg-green-500"
+  : timer.minutes < settings.redTime
+  ? "bg-yellow-500"
+  : timer.minutes < settings.redTime + 15
+  ? "bg-red-500"
+  : "bg-red-800 animate-pulse"
+}`}
 
                         >
 
@@ -600,7 +591,7 @@ ${timer.minutes >= settings.redTime + 15
 
                       {/* STATUS */}
 
-                      <td className="p-5">
+                      <td className="p-3 md:p-4">
 
                       {item.status === "Pending" && (
 
