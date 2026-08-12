@@ -61,6 +61,10 @@ const filtered =
       item.category === "Housekeeping" ||
       item.category === "IT"
   );
+
+  const pendingComplaints = filtered.filter(
+  item => item.status === "Pending"
+);
 // FILTER BY HOURS
 
 const recentComplaints = filtered.filter(
@@ -89,47 +93,53 @@ const recentComplaints = filtered.filter(
 
 setComplaints(recentComplaints);
 
-      // NEW COMPLAINT NOTIFICATION
+     // NEW COMPLAINT NOTIFICATION
 
-      filtered.forEach((item) => {
+// First dashboard load:
+// mark existing pending complaints as already seen
+if (notifiedComplaints.current.length === 0) {
 
-        if (
+  pendingComplaints.forEach((item) => {
+    notifiedComplaints.current.push(item._id);
+  });
 
-          !notifiedComplaints.current.includes(item._id)
+} else {
 
-        ) {
+  // Notify only newly arrived pending complaints
+  pendingComplaints.forEach((item) => {
 
-          const notifyAudio = new Audio(notificationSound);
+    if (
+      !notifiedComplaints.current.includes(item._id)
+    ) {
 
-          notifyAudio.volume = 0.4;
+      const notifyAudio =
+        new Audio(notificationSound);
 
-          notifyAudio.play();
+      notifyAudio.volume = 0.4;
 
-          toast.info(
+      notifyAudio.play().catch(() => {});
 
-            `🛠 Maintenance Alert - Room ${item.roomNo}`,
-
-            {
-
-              position: "top-right",
-
-              autoClose: 5000,
-
-            }
-
-          );
-
-          notifiedComplaints.current.push(item._id);
-
+      toast.info(
+        `🛠 New Complaint - Room ${item.roomNo}`,
+        {
+          position: "top-right",
+          autoClose: 5000,
         }
+      );
 
-      });
+      notifiedComplaints.current.push(
+        item._id
+      );
 
-      setComplaints(filtered);
+    }
+
+  });
+
+}
 
       // CRITICAL ALERT SOUND
 
-      const criticalComplaints = filtered.filter(
+      const criticalComplaints = pendingComplaints.filter(
 
         item => {
 
@@ -195,6 +205,13 @@ setComplaints(recentComplaints);
 
       }
 
+   // Remove complaints that are no longer pending
+notifiedComplaints.current =
+  notifiedComplaints.current.filter(id =>
+    pendingComplaints.some(
+      item => item._id === id
+    )
+  );
     } catch (error) {
 
       console.log(error);

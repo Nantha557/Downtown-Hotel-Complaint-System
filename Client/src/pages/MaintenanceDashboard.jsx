@@ -61,6 +61,10 @@ const filtered = response.data.filter(
 
 );
 
+const pendingComplaints = filtered.filter(
+  item => item.status === "Pending"
+);
+
 // FILTER BY HOURS
 
 const recentComplaints = filtered.filter(
@@ -91,43 +95,52 @@ setComplaints(recentComplaints);
 
       // NEW COMPLAINT NOTIFICATION
 
-      filtered.forEach((item) => {
+// First dashboard load:
+// mark existing pending complaints as already seen
+if (notifiedComplaints.current.length === 0) {
 
-        if (
+  pendingComplaints.forEach((item) => {
+    notifiedComplaints.current.push(item._id);
+  });
 
-          !notifiedComplaints.current.includes(item._id)
+} else {
 
-        ) {
+  // After dashboard is already running:
+  // notify only NEW pending complaints
 
-          const notifyAudio = new Audio(notificationSound);
+  pendingComplaints.forEach((item) => {
 
-          notifyAudio.volume = 0.4;
+    if (
+      !notifiedComplaints.current.includes(item._id)
+    ) {
 
-          notifyAudio.play();
+      const notifyAudio =
+        new Audio(notificationSound);
 
-          toast.info(
+      notifyAudio.volume = 0.4;
 
-            `🛠 Maintenance Alert - Room ${item.roomNo}`,
+      notifyAudio.play().catch(() => {});
 
-            {
-
-              position: "top-right",
-
-              autoClose: 5000,
-
-            }
-
-          );
-
-          notifiedComplaints.current.push(item._id);
-
+      toast.info(
+        `🛠 New Complaint - Room ${item.roomNo}`,
+        {
+          position: "top-right",
+          autoClose: 5000,
         }
+      );
 
-      });
+      notifiedComplaints.current.push(
+        item._id
+      );
 
+    }
+
+  });
+
+}
       // CRITICAL ALERT SOUND
 
-      const criticalComplaints = filtered.filter(
+      const criticalComplaints = pendingComplaints.filter(
 
         item => {
 
@@ -194,6 +207,14 @@ alertedComplaints.current =
 
     )
 
+  );
+
+  // Remove complaints that are no longer pending
+notifiedComplaints.current =
+  notifiedComplaints.current.filter(id =>
+    pendingComplaints.some(
+      item => item._id === id
+    )
   );
     } catch (error) {
 
