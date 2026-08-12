@@ -11,57 +11,34 @@ function Login() {
 
   useEffect(() => {
 
-  const token =
-    localStorage.getItem("token");
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
 
-  const role =
-    localStorage.getItem("role");
+  if (!token || !role) return;
 
-  if (token && role) {
-
-    if (role === "Admin") {
-
-      navigate(
-        "/admin-orders"
-      );
-
-    }
-
-    else if (
-      role === "Kitchen"
-    ) {
-
-      navigate(
-        "/kitchen-orders"
-      );
-
-    }
-
-    else if (
-      role === "RoomService"
-    ) {
-
-      navigate(
-        "/room-service"
-      );
-
-    }
-
-    else if (
-      role === "Manager"
-    ) {
-
-      navigate(
-        "/menu-management"
-      );
-
-    }
-
+  if (role === "admin") {
+    navigate("/dashboard", { replace: true });
   }
 
-}, []);
+  else if (role === "it") {
+    navigate("/it-dashboard", { replace: true });
+  }
 
-  const [formData, setFormData] = useState({
+  else if (role === "housekeeping") {
+    navigate("/housekeeping-dashboard", { replace: true });
+  }
+
+  else if (role === "maintenance") {
+    navigate("/maintenance-dashboard", { replace: true });
+  }
+
+  else if (role === "supervisor") {
+    navigate("/supervisor-dashboard", { replace: true });
+  }
+
+}, [navigate]);
+
+const [formData, setFormData] = useState({
 
     username: "",
 
