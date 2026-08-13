@@ -26,17 +26,7 @@ function Dashboard() {
   redTime: 30,
 });
 
-  const [notifiedComplaints, setNotifiedComplaints] = useState(() => {
-
-  const saved = localStorage.getItem(
-
-    "notifiedComplaints"
-
-  );
-
-  return saved ? JSON.parse(saved) : [];
-
-});
+ const initializedNotifications = useRef(false);
   // FETCH COMPLAINTS
 
   const fetchComplaints = async () => {
@@ -87,67 +77,82 @@ const filteredComplaints = response.data.filter(
 
 );
 
-const newComplaints = filteredComplaints;
+const newComplaints = [...filteredComplaints].sort((a, b) => {
 
-      // NEW COMPLAINT NOTIFICATION
-
-     // NEW COMPLAINT NOTIFICATION
-
-const existingIds = JSON.parse(
-
-  localStorage.getItem("notifiedComplaints")
-
-) || [];
-
-const newIds = [...existingIds];
-
-newComplaints.forEach((item) => {
-
-  if (!existingIds.includes(item._id)) {
-
-    // PLAY SOUND
-
-    const notifyAudio = new Audio(notificationSound);
-
-    notifyAudio.volume = 0.4;
-
-    notifyAudio.play();
-
-    // SHOW TOAST
-
-    toast.info(
-
-      `🚨 Room ${item.roomNo} - ${item.complaint}`,
-
-      {
-
-        position: "top-right",
-
-        autoClose: 5000,
-
-      }
-
-    );
-
-    // SAVE NEW ID
-
-    newIds.push(item._id);
-
+  if (a.status === "Pending" && b.status !== "Pending") {
+    return -1;
   }
+
+  if (a.status !== "Pending" && b.status === "Pending") {
+    return 1;
+  }
+
+  return 0;
 
 });
 
-// UPDATE STORAGE
+      // NEW COMPLAINT NOTIFICATION
 
-localStorage.setItem(
+     const existingIds =
+  JSON.parse(
+    localStorage.getItem("notifiedComplaints")
+  ) || [];
 
-  "notifiedComplaints",
-
-  JSON.stringify(newIds)
-
+const currentIds = newComplaints.map(
+  item => item._id
 );
 
-setNotifiedComplaints(newIds);
+
+// FIRST LOAD
+// Mark everything currently existing as already seen.
+// Do NOT notify for old complaints.
+
+if (!initializedNotifications.current) {
+
+  localStorage.setItem(
+    "notifiedComplaints",
+    JSON.stringify(currentIds)
+  );
+
+  initializedNotifications.current = true;
+
+} else {
+
+  // NEW COMPLAINTS ONLY
+
+  const newIds = [...existingIds];
+
+  newComplaints.forEach((item) => {
+
+    if (!existingIds.includes(item._id)) {
+
+      const notifyAudio =
+        new Audio(notificationSound);
+
+      notifyAudio.volume = 0.4;
+
+      notifyAudio.play();
+
+      toast.info(
+        `🚨 Room ${item.roomNo} - ${item.complaint}`,
+        {
+          position: "top-right",
+          autoClose: 5000,
+        }
+      );
+
+      newIds.push(item._id);
+
+    }
+
+  });
+
+  localStorage.setItem(
+    "notifiedComplaints",
+    JSON.stringify(newIds)
+  );
+}
+
 
       setComplaints(newComplaints);
 

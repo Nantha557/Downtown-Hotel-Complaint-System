@@ -89,7 +89,21 @@ const recentComplaints = filtered.filter(
 
 );
 
-setComplaints(recentComplaints);
+const sortedComplaints = [...recentComplaints].sort((a, b) => {
+
+  if (a.status === "Pending" && b.status !== "Pending") {
+    return -1;
+  }
+
+  if (a.status !== "Pending" && b.status === "Pending") {
+    return 1;
+  }
+
+  return 0;
+
+});
+
+setComplaints(sortedComplaints);
 
       // NEW COMPLAINT NOTIFICATION
 
