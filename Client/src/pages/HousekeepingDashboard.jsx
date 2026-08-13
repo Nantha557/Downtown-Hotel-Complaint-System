@@ -460,214 +460,481 @@ const getTimer = (
 
         {/* TABLE */}
 
-        <div className="bg-white rounded-3xl shadow-sm overflow-hidden">
+        {/* COMPLAINTS */}
 
-          <div className="p-4 md:p-5 border-b">
+<div className="bg-white rounded-3xl shadow-sm overflow-hidden">
 
-            <h2 className="text-xl md:text-2xl font-semibold text-gray-800">
+  {/* TITLE */}
 
-              Active Housekeeping Complaints
+  <div className="p-4 md:p-5 border-b">
 
-            </h2>
+    <h2 className="text-xl md:text-2xl font-semibold text-gray-800">
+      Active Housekeeping Complaints
+    </h2>
+
+  </div>
+
+
+  {/* ================= MOBILE CARDS ================= */}
+
+  <div className="md:hidden p-3 space-y-3">
+
+    {complaints.map((item) => {
+
+      const timer = getTimer(
+        item.createdAt,
+        item.status,
+        item.updatedAt
+      );
+
+      return (
+
+        <div
+          key={item._id}
+          className={`
+            rounded-2xl
+            border
+            p-4
+            transition-all
+            duration-500
+
+            ${
+              timer.minutes >= settings.redTime + 15
+                ? "bg-red-100 border-red-200 animate-pulse"
+                : timer.minutes >= settings.redTime
+                ? "bg-red-50 border-red-100"
+                : timer.minutes >= settings.yellowTime
+                ? "bg-yellow-50 border-yellow-100"
+                : "bg-white border-gray-100"
+            }
+          `}
+        >
+
+          {/* TOP ROW */}
+
+          <div className="flex items-center justify-between gap-3 mb-3">
+
+            <div>
+
+              <p className="text-xs text-gray-500">
+                Room
+              </p>
+
+              <p className="font-bold text-gray-800">
+                {item.roomNo}
+              </p>
+
+            </div>
+
+
+            {/* TIMER */}
+
+            <span
+              className={`
+                px-3
+                py-1.5
+                rounded-lg
+                text-sm
+                font-bold
+                text-white
+                whitespace-nowrap
+
+                ${
+                  timer.minutes < settings.yellowTime
+                    ? "bg-green-500"
+                    : timer.minutes < settings.redTime
+                    ? "bg-yellow-500"
+                    : timer.minutes < settings.redTime + 15
+                    ? "bg-red-500"
+                    : "bg-red-800 animate-pulse"
+                }
+              `}
+            >
+
+              {timer.time}
+
+            </span>
 
           </div>
 
-          <div className="overflow-x-auto">
 
-            <table className="w-full">
+          {/* COMPLAINT */}
 
-              <thead className="bg-gray-50">
+          <div className="mb-2">
 
-                <tr>
+            <p className="text-xs text-gray-500">
+              Complaint
+            </p>
 
-                  <th className="text-left p-3 md:p-4">
-
-                    Room
-
-                  </th>
-
-                  <th className="text-left p-3 md:p-4">
-
-                    Complaint
-
-                  </th>
-
-                  <th className="text-left p-3 md:p-4">
-
-                    Description
-
-                  </th>
-
-                  <th className="text-left p-3 md:p-4">
-
-                    Timer
-
-                  </th>
-
-                  <th className="text-left p-3 md:p-4">
-
-                    Status
-
-                  </th>
-
-                </tr>
-
-              </thead>
-
-              <tbody>
-
-                {complaints.map((item) => {
-
-                  const timer = getTimer(
-
-                    item.createdAt,
-
-                    item.status,
-
-                    item.updatedAt
-
-                  );
-                  return (
-
-                    <tr
-
-                      key={item._id}
-
-                     className={`border-b transition-all duration-500
-
-${timer.minutes >= settings.redTime + 15
-  ? "bg-red-100 animate-pulse"
-  : timer.minutes >= settings.redTime
-  ? "bg-red-50"
-  : timer.minutes >= settings.yellowTime
-  ? "bg-yellow-50"
-  : "hover:bg-gray-50"
-}`}
-
-                    >
-
-                      <td className="p-3 md:p-4 font-semibold">
-
-                        {item.roomNo}
-
-                      </td>
-
-                      <td className="p-3 md:p-4 font-medium text-gray-700">
-
-                        {item.complaint}
-
-                      </td>
-
-                      <td className="p-3 md:p-4 text-gray-500 max-w-xs">
-
-                        {item.description}
-
-                      </td>
-
-                      {/* TIMER */}
-
-                      <td className="p-3 md:p-4">
-
-                        <span
-
-                          className={`px-4 py-2 rounded-xl text-sm font-bold text-white
-
-                        ${timer.minutes < settings.yellowTime
-  ? "bg-green-500"
-  : timer.minutes < settings.redTime
-  ? "bg-yellow-500"
-  : timer.minutes < settings.redTime + 15
-  ? "bg-red-500"
-  : "bg-red-800 animate-pulse"
-}`}
-
-                        >
-
-                          {timer.time}
-
-                        </span>
-
-                      </td>
-
-                      {/* STATUS */}
-
-                      <td className="p-3 md:p-4">
-
-                      {item.status === "Pending" && (
-
-                        <div className="flex gap-2">
-
-                          <button
-                            onClick={() => markResolved(item._id)}
-                            className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl"
-                          >
-                            Completed
-                          </button>
-
-                          <button
-                            onClick={() => markHold(item._id)}
-                            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl"
-                          >
-                            Pending
-                          </button>
-
-                        </div>
-
-                      )}
-
-                      {item.status === "Resolved" && (
-
-                        <span className="bg-green-100 text-green-600 px-4 py-2 rounded-xl text-sm font-semibold">
-
-                          Completed
-
-                        </span>
-
-                      )}
-
-                      {item.status === "On Hold" && (
-
-                        <div>
-
-                          <span className="bg-blue-100 text-blue-700 px-4 py-2 rounded-xl text-sm font-semibold">
-
-                            Pending
-
-                          </span>
-
-                          <p className="text-xs text-gray-500 mt-2">
-
-                            {item.holdReason}
-
-                          </p>
-
-                          <button
-                            onClick={() => markResolved(item._id)}
-                            className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl mt-2"
-                          >
-                            Completed
-                          </button>
-
-                        </div>
-
-                      )}
-
-                    </td>
-
-                    </tr>
-
-                  );
-
-                })}
-
-              </tbody>
-
-            </table>
+            <p className="font-semibold text-gray-800">
+              {item.complaint}
+            </p>
 
           </div>
+
+
+          {/* DESCRIPTION */}
+
+          <div className="mb-4">
+
+            <p className="text-xs text-gray-500">
+              Description
+            </p>
+
+            <p className="text-sm text-gray-600">
+              {item.description}
+            </p>
+
+          </div>
+
+
+          {/* STATUS */}
+
+          {item.status === "Pending" && (
+
+            <div className="flex gap-2">
+
+              <button
+                onClick={() => markResolved(item._id)}
+                className="
+                  flex-1
+                  bg-green-500
+                  hover:bg-green-600
+                  text-white
+                  py-2.5
+                  rounded-xl
+                  text-sm
+                  font-semibold
+                "
+              >
+                ✓ Completed
+              </button>
+
+
+              <button
+                onClick={() => markHold(item._id)}
+                className="
+                  flex-1
+                  bg-blue-500
+                  hover:bg-blue-600
+                  text-white
+                  py-2.5
+                  rounded-xl
+                  text-sm
+                  font-semibold
+                "
+              >
+                ⏸ Pending
+              </button>
+
+            </div>
+
+          )}
+
+
+          {/* RESOLVED */}
+
+          {item.status === "Resolved" && (
+
+            <div>
+
+              <span className="
+                inline-block
+                bg-green-100
+                text-green-600
+                px-3
+                py-1.5
+                rounded-lg
+                text-sm
+                font-semibold
+              ">
+                ✓ Completed
+              </span>
+
+            </div>
+
+          )}
+
+
+          {/* ON HOLD */}
+
+          {item.status === "On Hold" && (
+
+            <div>
+
+              <div className="flex items-center justify-between gap-2">
+
+                <span className="
+                  bg-blue-100
+                  text-blue-700
+                  px-3
+                  py-1.5
+                  rounded-lg
+                  text-sm
+                  font-semibold
+                ">
+                  ⏸ Pending
+                </span>
+
+
+                <button
+                  onClick={() => markResolved(item._id)}
+                  className="
+                    bg-green-500
+                    hover:bg-green-600
+                    text-white
+                    px-3
+                    py-1.5
+                    rounded-lg
+                    text-sm
+                    font-semibold
+                  "
+                >
+                  ✓ Completed
+                </button>
+
+              </div>
+
+
+              <p className="text-xs text-gray-500 mt-2">
+                {item.holdReason}
+              </p>
+
+            </div>
+
+          )}
 
         </div>
 
+      );
+
+    })}
+
+  </div>
+
+
+  {/* ================= DESKTOP TABLE ================= */}
+
+  <div className="hidden md:block overflow-x-auto">
+
+    <table className="w-full">
+
+      <thead className="bg-gray-50">
+
+        <tr>
+
+          <th className="text-left p-4">
+            Room
+          </th>
+
+          <th className="text-left p-4">
+            Complaint
+          </th>
+
+          <th className="text-left p-4">
+            Description
+          </th>
+
+          <th className="text-left p-4">
+            Timer
+          </th>
+
+          <th className="text-left p-4">
+            Status
+          </th>
+
+        </tr>
+
+      </thead>
+
+
+      <tbody>
+
+        {complaints.map((item) => {
+
+          const timer = getTimer(
+            item.createdAt,
+            item.status,
+            item.updatedAt
+          );
+
+          return (
+
+            <tr
+              key={item._id}
+              className={`
+                border-b
+                transition-all
+                duration-500
+
+                ${
+                  timer.minutes >= settings.redTime + 15
+                    ? "bg-red-100 animate-pulse"
+                    : timer.minutes >= settings.redTime
+                    ? "bg-red-50"
+                    : timer.minutes >= settings.yellowTime
+                    ? "bg-yellow-50"
+                    : "hover:bg-gray-50"
+                }
+              `}
+            >
+
+              <td className="p-4 font-semibold">
+                {item.roomNo}
+              </td>
+
+
+              <td className="p-4 font-medium text-gray-700">
+                {item.complaint}
+              </td>
+
+
+              <td className="p-4 text-gray-500 max-w-xs">
+                {item.description}
+              </td>
+
+
+              <td className="p-4">
+
+                <span
+                  className={`
+                    px-3
+                    py-1.5
+                    rounded-lg
+                    text-sm
+                    font-bold
+                    text-white
+
+                    ${
+                      timer.minutes < settings.yellowTime
+                        ? "bg-green-500"
+                        : timer.minutes < settings.redTime
+                        ? "bg-yellow-500"
+                        : timer.minutes < settings.redTime + 15
+                        ? "bg-red-500"
+                        : "bg-red-800 animate-pulse"
+                    }
+                  `}
+                >
+                  {timer.time}
+                </span>
+
+              </td>
+
+
+              <td className="p-4">
+
+                {item.status === "Pending" && (
+
+                  <div className="flex gap-2">
+
+                    <button
+                      onClick={() => markResolved(item._id)}
+                      className="
+                        bg-green-500
+                        hover:bg-green-600
+                        text-white
+                        px-4
+                        py-2
+                        rounded-xl
+                      "
+                    >
+                      Completed
+                    </button>
+
+
+                    <button
+                      onClick={() => markHold(item._id)}
+                      className="
+                        bg-blue-500
+                        hover:bg-blue-600
+                        text-white
+                        px-4
+                        py-2
+                        rounded-xl
+                      "
+                    >
+                      Pending
+                    </button>
+
+                  </div>
+
+                )}
+
+
+                {item.status === "Resolved" && (
+
+                  <span className="
+                    bg-green-100
+                    text-green-600
+                    px-4
+                    py-2
+                    rounded-xl
+                    text-sm
+                    font-semibold
+                  ">
+                    Completed
+                  </span>
+
+                )}
+
+
+                {item.status === "On Hold" && (
+
+                  <div>
+
+                    <span className="
+                      bg-blue-100
+                      text-blue-700
+                      px-4
+                      py-2
+                      rounded-xl
+                      text-sm
+                      font-semibold
+                    ">
+                      Pending
+                    </span>
+
+
+                    <p className="text-xs text-gray-500 mt-2">
+                      {item.holdReason}
+                    </p>
+
+
+                    <button
+                      onClick={() => markResolved(item._id)}
+                      className="
+                        bg-green-500
+                        hover:bg-green-600
+                        text-white
+                        px-4
+                        py-2
+                        rounded-xl
+                        mt-2
+                      "
+                    >
+                      Completed
+                    </button>
+
+                  </div>
+
+                )}
+
+              </td>
+
+            </tr>
+
+          );
+
+        })}
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
       </div>
 
     </Layout>
