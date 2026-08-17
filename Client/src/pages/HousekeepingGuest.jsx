@@ -7,10 +7,64 @@ function HousekeepingGuest() {
   const [complaint, setComplaint] = useState("");
   const [description, setDescription] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const isValidRoomNumber = (room) => {
+
+  const num = Number(room);
+
+  if (!Number.isInteger(num)) {
+    return false;
+  }
+
+  // Rooms 1–21 except 13
+  if (num >= 1 && num <= 21 && num !== 13) {
+    return true;
+  }
+
+  // 100 series
+  if (num >= 101 && num <= 150) {
+    return true;
+  }
+
+  // 200 series
+  if (num >= 201 && num <= 255) {
+    return true;
+  }
+
+  // 300 series
+  if (num >= 301 && num <= 355) {
+    return true;
+  }
+
+  // 400 series
+  if (num >= 401 && num <= 455) {
+    return true;
+  }
+
+  // Special rooms
+  if (
+    (num >= 160 && num <= 170) ||
+    (num >= 260 && num <= 270) ||
+    (num >= 360 && num <= 370) ||
+    (num >= 460 && num <= 470)
+  ) {
+    return true;
+  }
+
+  return false;
+};
 
   const handleSubmit = async (e) => {
 
     e.preventDefault();
+
+    if (!isValidRoomNumber(roomNo)) {
+
+  alert(
+    "Invalid room number. Please enter a valid hotel room number."
+  );
+
+  return;
+}
 
     try {
 
@@ -106,7 +160,7 @@ function HousekeepingGuest() {
             </label>
 
             <input
-              type="text"
+              type="number"
               value={roomNo}
               onChange={(e) => setRoomNo(e.target.value)}
               required
