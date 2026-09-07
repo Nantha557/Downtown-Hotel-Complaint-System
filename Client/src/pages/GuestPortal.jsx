@@ -26,7 +26,7 @@ function GuestPortal() {
   const navigate = useNavigate();
 
   const FOOD_ORDERING_URL =
-  "https://downtown-food-ordering-system.vercel.app/menu";
+  "https://downtown-food-ordering-system-green.vercel.app/menu";
 
 return (
 
