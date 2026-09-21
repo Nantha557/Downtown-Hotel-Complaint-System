@@ -16,6 +16,10 @@ function Complaints() {
 
   const [, setRefresh] = useState(0);
 
+  // SELECTED COMPLAINT FOR VIEW MODAL
+  const [selectedComplaint, setSelectedComplaint] = useState(null);
+
+
   const fetchComplaints = async () => {
 
     try {
@@ -32,6 +36,7 @@ function Complaints() {
 
   };
 
+
   useEffect(() => {
 
     fetchComplaints();
@@ -46,16 +51,14 @@ function Complaints() {
 
   }, []);
 
-  // TIMER
 
+  // TIMER
   const getTimer = (createdAt, status, updatedAt) => {
 
     const created = new Date(createdAt);
 
     const endTime = status === "Resolved"
-
       ? new Date(updatedAt)
-
       : new Date();
 
     const diff = Math.floor((endTime - created) / 1000);
@@ -74,60 +77,85 @@ function Complaints() {
 
   };
 
+
+  // FORMAT DATE + TIME
+  const formatDateTime = (date) => {
+
+    if (!date) return "Not available";
+
+    return new Date(date).toLocaleString("en-IN", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: true,
+    });
+
+  };
+
+
   // FILTERS
 
   const totalComplaints = complaints.length;
 
-const resolvedComplaints =
-  complaints.filter(
-    item => item.status === "Resolved"
-  ).length;
+  const resolvedComplaints =
+    complaints.filter(
+      item => item.status === "Resolved"
+    ).length;
 
-const pendingComplaints =
-  complaints.filter(
-    item => item.status === "Pending"
-  ).length;
+  const pendingComplaints =
+    complaints.filter(
+      item => item.status === "Pending"
+    ).length;
 
-const onHoldComplaints =
-  complaints.filter(
-    item => item.status === "On Hold"
-  ).length;
+  const onHoldComplaints =
+    complaints.filter(
+      item => item.status === "On Hold"
+    ).length;
+
 
   const filteredComplaints = complaints.filter((item) => {
 
-  const matchesSearch =
+    const matchesSearch =
 
-    item.roomNo
-      .toString()
-      .includes(search) ||
+      item.roomNo
+        .toString()
+        .includes(search) ||
 
-    item.complaint
-      .toLowerCase()
-      .includes(search.toLowerCase());
+      item.complaint
+        .toLowerCase()
+        .includes(search.toLowerCase());
 
-  const matchesDepartment =
 
-    department === "All" ||
+    const matchesDepartment =
 
-    item.category === department;
+      department === "All" ||
 
-  const matchesStatus =
+      item.category === department;
 
-    status === "All" ||
 
-    item.status === status;
+    const matchesStatus =
 
-  return (
+      status === "All" ||
 
-    matchesSearch &&
+      item.status === status;
 
-    matchesDepartment &&
 
-    matchesStatus
+    return (
 
-  );
+      matchesSearch &&
 
-});
+      matchesDepartment &&
+
+      matchesStatus
+
+    );
+
+  });
+
+
   return (
 
     <Layout>
@@ -152,47 +180,81 @@ const onHoldComplaints =
 
         </div>
 
+
         {/* STATS */}
 
-       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
 
-  <div className="bg-white rounded-2xl p-5 shadow-sm">
-    <p className="text-gray-500 text-sm">
-      Total Complaints
-    </p>
-    <h2 className="text-3xl font-bold text-blue-600 mt-2">
-      {totalComplaints}
-    </h2>
-  </div>
+          <div className="bg-white rounded-2xl p-5 shadow-sm">
 
-  <div className="bg-white rounded-2xl p-5 shadow-sm">
-    <p className="text-gray-500 text-sm">
-      Completed
-    </p>
-    <h2 className="text-3xl font-bold text-green-500 mt-2">
-      {resolvedComplaints}
-    </h2>
-  </div>
+            <p className="text-gray-500 text-sm">
 
-  <div className="bg-white rounded-2xl p-5 shadow-sm">
-    <p className="text-gray-500 text-sm">
-      To Complete
-    </p>
-    <h2 className="text-3xl font-bold text-red-500 mt-2">
-      {pendingComplaints}
-    </h2>
-  </div>
+              Total Complaints
 
-  <div className="bg-white rounded-2xl p-5 shadow-sm">
-    <p className="text-gray-500 text-sm">
-      Pending
-    </p>
-    <h2 className="text-3xl font-bold text-yellow-500 mt-2">
-      {onHoldComplaints}
-    </h2>
-  </div>
+            </p>
 
-</div>
+            <h2 className="text-3xl font-bold text-blue-600 mt-2">
+
+              {totalComplaints}
+
+            </h2>
+
+          </div>
+
+
+          <div className="bg-white rounded-2xl p-5 shadow-sm">
+
+            <p className="text-gray-500 text-sm">
+
+              Completed
+
+            </p>
+
+            <h2 className="text-3xl font-bold text-green-500 mt-2">
+
+              {resolvedComplaints}
+
+            </h2>
+
+          </div>
+
+
+          <div className="bg-white rounded-2xl p-5 shadow-sm">
+
+            <p className="text-gray-500 text-sm">
+
+              To Complete
+
+            </p>
+
+            <h2 className="text-3xl font-bold text-red-500 mt-2">
+
+              {pendingComplaints}
+
+            </h2>
+
+          </div>
+
+
+          <div className="bg-white rounded-2xl p-5 shadow-sm">
+
+            <p className="text-gray-500 text-sm">
+
+              Pending
+
+            </p>
+
+            <h2 className="text-3xl font-bold text-yellow-500 mt-2">
+
+              {onHoldComplaints}
+
+            </h2>
+
+          </div>
+
+        </div>
+
+
         {/* FILTERS */}
 
         <div className="bg-white rounded-3xl p-5 shadow-sm mb-8">
@@ -214,6 +276,7 @@ const onHoldComplaints =
               className="border rounded-2xl p-4 outline-none focus:ring-2 focus:ring-blue-500"
 
             />
+
 
             {/* DEPARTMENT */}
 
@@ -247,6 +310,7 @@ const onHoldComplaints =
 
             </select>
 
+
             {/* STATUS */}
 
             <select
@@ -271,9 +335,11 @@ const onHoldComplaints =
 
               </option>
 
-<option value="On Hold">
-  Pending
-</option>
+              <option value="On Hold">
+
+                Pending
+
+              </option>
 
               <option value="Resolved">
 
@@ -286,6 +352,7 @@ const onHoldComplaints =
           </div>
 
         </div>
+
 
         {/* MOBILE CARDS */}
 
@@ -302,6 +369,7 @@ const onHoldComplaints =
               item.updatedAt
 
             );
+
 
             return (
 
@@ -333,6 +401,7 @@ const onHoldComplaints =
 
                   </h2>
 
+
                   <span
 
                     className={`px-3 py-1 rounded-xl text-sm font-bold text-white
@@ -357,17 +426,20 @@ const onHoldComplaints =
 
                 </div>
 
+
                 <p className="text-lg font-semibold text-gray-700 mb-2">
 
                   {item.complaint}
 
                 </p>
 
+
                 <p className="text-gray-500 mb-4">
 
                   {item.description}
 
                 </p>
+
 
                 <div className="flex justify-between items-center">
 
@@ -376,6 +448,7 @@ const onHoldComplaints =
                     {item.category}
 
                   </span>
+
 
                   <span
 
@@ -397,6 +470,21 @@ const onHoldComplaints =
 
                 </div>
 
+
+                {/* MOBILE VIEW BUTTON */}
+
+                <button
+
+                  onClick={() => setSelectedComplaint(item)}
+
+                  className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-xl font-semibold transition"
+
+                >
+
+                  View
+
+                </button>
+
               </div>
 
             );
@@ -404,6 +492,7 @@ const onHoldComplaints =
           })}
 
         </div>
+
 
         {/* DESKTOP TABLE */}
 
@@ -445,9 +534,16 @@ const onHoldComplaints =
 
                 </th>
 
+                <th className="text-left p-5">
+
+                  View
+
+                </th>
+
               </tr>
 
             </thead>
+
 
             <tbody>
 
@@ -462,6 +558,7 @@ const onHoldComplaints =
                   item.updatedAt
 
                 );
+
 
                 return (
 
@@ -491,17 +588,20 @@ const onHoldComplaints =
 
                     </td>
 
+
                     <td className="p-5">
 
                       {item.complaint}
 
                     </td>
 
+
                     <td className="p-5">
 
                       {item.category}
 
                     </td>
+
 
                     <td className="p-5">
 
@@ -529,6 +629,7 @@ const onHoldComplaints =
 
                     </td>
 
+
                     <td className="p-5">
 
                       <span
@@ -551,6 +652,25 @@ const onHoldComplaints =
 
                     </td>
 
+
+                    {/* VIEW BUTTON */}
+
+                    <td className="p-5">
+
+                      <button
+
+                        onClick={() => setSelectedComplaint(item)}
+
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-xl font-semibold transition"
+
+                      >
+
+                        View
+
+                      </button>
+
+                    </td>
+
                   </tr>
 
                 );
@@ -562,6 +682,295 @@ const onHoldComplaints =
           </table>
 
         </div>
+
+
+        {/* VIEW COMPLAINT MODAL */}
+
+        {selectedComplaint && (
+
+          <div
+
+            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+
+            onClick={() => setSelectedComplaint(null)}
+
+          >
+
+            <div
+
+              className="bg-white w-full max-w-lg rounded-3xl shadow-2xl p-6 md:p-8 max-h-[90vh] overflow-y-auto"
+
+              onClick={(e) => e.stopPropagation()}
+
+            >
+
+              {/* MODAL HEADER */}
+
+              <div className="flex justify-between items-center mb-6">
+
+                <div>
+
+                  <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
+
+                    Complaint Details
+
+                  </h2>
+
+                  <p className="text-gray-500 mt-1">
+
+                    Room {selectedComplaint.roomNo}
+
+                  </p>
+
+                </div>
+
+
+                <button
+
+                  onClick={() => setSelectedComplaint(null)}
+
+                  className="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 text-xl font-bold"
+
+                >
+
+                  ×
+
+                </button>
+
+              </div>
+
+
+              {/* COMPLAINT */}
+
+              <div className="space-y-4">
+
+                <div className="bg-gray-50 rounded-2xl p-4">
+
+                  <p className="text-sm text-gray-500 mb-1">
+
+                    Complaint
+
+                  </p>
+
+                  <p className="font-semibold text-gray-800">
+
+                    {selectedComplaint.complaint}
+
+                  </p>
+
+                </div>
+
+
+                {/* DESCRIPTION */}
+
+                <div className="bg-gray-50 rounded-2xl p-4">
+
+                  <p className="text-sm text-gray-500 mb-1">
+
+                    Description
+
+                  </p>
+
+                  <p className="text-gray-700">
+
+                    {selectedComplaint.description || "No description provided"}
+
+                  </p>
+
+                </div>
+
+
+                {/* DEPARTMENT */}
+
+                <div className="flex gap-4">
+
+                  <div className="flex-1 bg-blue-50 rounded-2xl p-4">
+
+                    <p className="text-sm text-gray-500 mb-1">
+
+                      Department
+
+                    </p>
+
+                    <p className="font-semibold text-blue-600">
+
+                      {selectedComplaint.category}
+
+                    </p>
+
+                  </div>
+
+
+                  <div className="flex-1 bg-gray-50 rounded-2xl p-4">
+
+                    <p className="text-sm text-gray-500 mb-1">
+
+                      Status
+
+                    </p>
+
+                    <p
+
+                      className={`font-semibold
+
+                      ${selectedComplaint.status === "Resolved"
+
+                        ? "text-green-600"
+
+                        : selectedComplaint.status === "On Hold"
+
+                        ? "text-yellow-600"
+
+                        : "text-red-600"
+
+                      }`}
+
+                    >
+
+                      {selectedComplaint.status}
+
+                    </p>
+
+                  </div>
+
+                </div>
+
+
+                {/* COMPLAINT TIME */}
+
+                <div className="bg-blue-50 rounded-2xl p-4">
+
+                  <p className="text-sm text-gray-500 mb-1">
+
+                    🕐 Complaint Received
+
+                  </p>
+
+                  <p className="font-semibold text-gray-800">
+
+                    {formatDateTime(selectedComplaint.createdAt)}
+
+                  </p>
+
+                </div>
+
+
+                {/* RESOLVED TIME */}
+
+                {selectedComplaint.status === "Resolved" ? (
+
+                  <div className="bg-green-50 rounded-2xl p-4">
+
+                    <p className="text-sm text-gray-500 mb-1">
+
+                      ✅ Resolved At
+
+                    </p>
+
+                    <p className="font-semibold text-green-700">
+
+                      {formatDateTime(selectedComplaint.updatedAt)}
+
+                    </p>
+
+                  </div>
+
+                ) : (
+
+                  <div className="bg-yellow-50 rounded-2xl p-4">
+
+                    <p className="text-sm text-gray-500 mb-1">
+
+                      ⏳ Resolution
+
+                    </p>
+
+                    <p className="font-semibold text-yellow-700">
+
+                      Not resolved yet
+
+                    </p>
+
+                  </div>
+
+                )}
+
+
+                {/* TOTAL TIME */}
+
+                <div className="bg-purple-50 rounded-2xl p-4">
+
+                  <p className="text-sm text-gray-500 mb-1">
+
+                    ⏱️ Time Taken
+
+                  </p>
+
+                  <p className="font-semibold text-purple-700">
+
+                    {getTimer(
+
+                      selectedComplaint.createdAt,
+
+                      selectedComplaint.status,
+
+                      selectedComplaint.updatedAt
+
+                    ).time}
+
+                  </p>
+
+                </div>
+
+
+                {/* HOLD REASON */}
+
+                {selectedComplaint.status === "On Hold" &&
+
+                  selectedComplaint.holdReason && (
+
+                    <div className="bg-yellow-50 rounded-2xl p-4">
+
+                      <p className="text-sm text-gray-500 mb-1">
+
+                        🟡 Hold Reason
+
+                      </p>
+
+                      <p className="font-semibold text-yellow-700">
+
+                        {selectedComplaint.holdReason}
+
+                      </p>
+
+                    </div>
+
+                  )
+
+                }
+
+              </div>
+
+
+              {/* CLOSE BUTTON */}
+
+              <button
+
+                onClick={() => setSelectedComplaint(null)}
+
+                className="w-full mt-6 bg-gray-800 hover:bg-gray-900 text-white py-3 rounded-xl font-semibold transition"
+
+              >
+
+                Close
+
+              </button>
+
+            </div>
+
+          </div>
+
+        )}
 
       </div>
 
